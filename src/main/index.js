@@ -88,6 +88,41 @@ app.whenReady().then(() => {
     });
   });
 
+  ipcMain.handle("listFolders", (event, currentNotebook) => {
+    // Check for path existence
+    if (!fs.existsSync(currentNotebook)){
+      return
+    }
+    
+    // Check if there are any special paths
+    if (currentNotebook.includes("../")){
+      return
+    }
+    if (currentNotebook.includes("..\\")){
+      return
+    }
+
+    try {
+      const dir = currentNotebook
+      
+      let files = fs.readdirSync(dir);
+      let fileList = [];
+  
+      files.forEach((file) => {
+        const filePath = path.join(dir, file);
+        const stat = fs.statSync(filePath);
+        if (stat.isDirectory()) {
+          fileList.push(filePath);
+        }
+      });
+  
+      return fileList;
+    } catch (error) {
+      console.error("Error reading directory:", error);
+      return [];
+    }
+  });
+
   createWindow()
 
   app.on('activate', function () {

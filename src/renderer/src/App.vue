@@ -9,16 +9,16 @@
             <img src="./assets/icon.png" alt="Menu" class="h-7 rounded-full">
           </div>
         </div>
-        <div class="flex flex-col justify-center px-3 text-white w-full duration-200 hover:bg-[#2d2d2d]" @click="this.openSwitchNotebookMenu = true">
+        <button class="flex flex-col justify-center px-3 text-white w-full duration-200 hover:bg-[#2d2d2d]" @click="this.openSwitchNotebookMenu = true">
           <div class="flex w-full">
-            <div class="flex-grow">
+            <div class="flex-grow text-left">
               {{ currentNotebook.replace(/^.*[\\/]/, "") }}
             </div>
             <div class="flex flex-col justify-center">
               <img src="./assets/material_symbols/arrow_drop_down.svg">
             </div>
           </div>
-        </div>
+        </button>
         <Transition name="fade">
             <div class="absolute w-screen h-screen left-0 top-0 bg-black opacity-40 z-20" v-if="this.openSwitchNotebookMenu" @click="this.openSwitchNotebookMenu = false"></div>
           </Transition>
@@ -37,8 +37,8 @@
       </div>
 
       <div class="mx-3 my-3">
-        <inFolder type="root" name="ルート" is_current_folder="true" />
-        <inFolder type="folder" name="新しいフォルダ" />
+        <inFolder type="root" name="ルート" :is_current_folder="currentFolder === currentNotebook" @click="currentFolder = currentNotebook" />
+        <inFolder v-for="i in folders" type="folder" :name="i.replace(/^.*[\\/]/, '')" @click="currentFolder = i" :is_current_folder="currentFolder === i" />
       </div>
 
     </div>
@@ -104,9 +104,11 @@ export default {
 
       // Paths
       currentNotebook: "",
+      currentFolder: "",
 
       // Data
-      notebooks: []
+      notebooks: [],
+      folders: []
     }
   },
   mounted(){
@@ -114,6 +116,8 @@ export default {
     window.api.getCurrentNotebook()
       .then(result => {
         this.currentNotebook = result;
+        this.currentFolder = this.currentNotebook;
+        this.getFolders()
       })
     
     // Get Notebooks
@@ -125,9 +129,17 @@ export default {
   methods: {
     switchNotebook(i){
       this.currentNotebook = i
+      this.currentFolder = this.currentNotebook
       this.openSwitchNotebookMenu = false
 
-      // Todo: reload files, folders
+      // Reload files and folders
+      this.getFolders()
+    },
+    getFolders(){
+      window.api.listFolders(this.currentNotebook)
+        .then(result => {
+          this.folders = result;
+        })
     }
   }
 }
