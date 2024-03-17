@@ -88,6 +88,23 @@ app.whenReady().then(() => {
     });
   });
 
+  ipcMain.handle("listFolders", (event, currentNotebook) => {
+    const dir = currentNotebook
+
+    let files = fs.readdirSync(dir);
+    let fileList = [];
+
+    files.forEach((file) => {
+      const filePath = path.join(dir, file);
+      const stat = fs.statSync(filePath);
+      if (stat.isDirectory()) {
+        fileList.push(filePath);
+      }
+    });
+
+    return fileList;
+  });
+
   createWindow()
 
   app.on('activate', function () {
