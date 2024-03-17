@@ -11,6 +11,7 @@ function createWindow() {
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
+    'icon': __dirname + '/../../resources/icon64x64.png',
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
