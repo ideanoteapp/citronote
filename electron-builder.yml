@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: ideanote-v2
+appId: com.ideanoteapp.v2
+productName: ideaNote
 directories:
   buildResources: build
 files:
@@ -11,7 +11,7 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: ideanote-v2
+  executableName: ideanote
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
