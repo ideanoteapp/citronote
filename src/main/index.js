@@ -1,7 +1,21 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import icon from '../../resources/icon.png?asset'
+const path = require("path");
+const fs = require("fs");
+
+const userDataPath = app.getPath("userData");
+
+const configPath = path.join(userDataPath, "currentnotebook.txt");
+
+if (!fs.existsSync(path.join(userDataPath, "currentnotebook.txt"))) {
+  fs.writeFileSync(path.join(userDataPath, "currentnotebook.txt"));
+}
+
+// Create the notebooks folder if it doesn't exist
+if (!fs.existsSync(path.join(userDataPath, "notebooks/"))) {
+  fs.mkdirSync(path.join(userDataPath, "notebooks/"));
+}
 
 function createWindow() {
   // Create the browser window.
@@ -10,7 +24,6 @@ function createWindow() {
     height: 670,
     show: false,
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
     'icon': __dirname + '/../../resources/icon64x64.png',
     webPreferences: {
       contextIsolation: true,
@@ -51,8 +64,29 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  // IPC
+  ipcMain.handle("listNotebooks", (event) => {
+    const dir = path.join(userDataPath, "notebooks/")
+
+    let files = fs.readdirSync(dir);
+    let fileList = [];
+
+    files.forEach((file) => {
+      const filePath = path.join(dir, file);
+      const stat = fs.statSync(filePath);
+      if (stat.isDirectory()) {
+        fileList.push(filePath);
+      }
+    });
+
+    return fileList;
+  });
+
+  ipcMain.handle("getCurrentNotebook", (event) => {
+    return fs.readFileSync(path.join(userDataPath, "currentnotebook.txt"), {
+      encoding: "utf-8",
+    });
+  });
 
   createWindow()
 

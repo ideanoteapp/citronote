@@ -9,16 +9,29 @@
             <img src="./assets/icon.png" alt="Menu" class="h-7 rounded-full">
           </div>
         </div>
-        <div class="flex flex-col justify-center px-3 text-white w-full duration-200 hover:bg-[#2d2d2d]">
+        <div class="flex flex-col justify-center px-3 text-white w-full duration-200 hover:bg-[#2d2d2d]" @click="this.openSwitchNotebookMenu = true">
           <div class="flex w-full">
             <div class="flex-grow">
-              Main
+              {{ currentNotebook.replace(/^.*[\\/]/, "") }}
             </div>
             <div class="flex flex-col justify-center">
               <img src="./assets/material_symbols/arrow_drop_down.svg">
             </div>
           </div>
         </div>
+        <Transition name="fade">
+            <div class="absolute w-screen h-screen left-0 top-0 bg-black opacity-40 z-20" v-if="this.openSwitchNotebookMenu" @click="this.openSwitchNotebookMenu = false"></div>
+          </Transition>
+          <Transition name="slide-up">
+            <div class="absolute py-1.5 left-14 bg-[#262626] z-50 w-48 rounded-lg top-10 shadow-md border border-[#5f5f5f]" v-if="this.openSwitchNotebookMenu">
+              <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200" v-for="i in notebooks" @click="switchNotebook(i)">
+                <img src="./assets/material_symbols/book_2.svg">
+                <div class="flex flex-col justify-center text-white ml-1.5">
+                  {{ i.replace(/^.*[\\/]/, "") }}
+                </div>
+              </button>
+            </div>
+          </Transition>
       </div>
 
       <div class="mx-3 my-3">
@@ -81,6 +94,39 @@ export default {
     inTurorialBalloon,
     inFolder,
     inNote
+  },
+  data: () => {
+    return {
+      // Menu opens
+      openSwitchNotebookMenu: false,
+
+      // Paths
+      currentNotebook: "",
+
+      // Data
+      notebooks: []
+    }
+  },
+  mounted(){
+    // Get current notebook
+    window.api.getCurrentNotebook()
+      .then(result => {
+        this.currentNotebook = result;
+      })
+    
+    // Get Notebooks
+    window.api.listNotebooks()
+      .then(result => {
+        this.notebooks = result;
+      })
+  },
+  methods: {
+    switchNotebook(i){
+      this.currentNotebook = i
+      this.openSwitchNotebookMenu = false
+
+      // Todo: reload files, folders
+    }
   }
 }
 </script>
@@ -94,5 +140,30 @@ export default {
   .hover-light {
     @apply before:opacity-0 before:hover:opacity-100 before:absolute before:content-[''] before:bg-[#353535] before:p-4 before:rounded-full before:-ml-4 before:-mt-1 before:duration-200
   }
+}
+
+/* Transition */
+.slide-up-enter-active {
+  transition: all 0.15s ease-out;
+}
+
+.slide-up-leave-active {
+  transition: all 0.15s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-up-enter-from,
+.slide-up-leave-to {
+  transform: translateY(10px);
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.15s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
