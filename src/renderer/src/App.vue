@@ -24,12 +24,14 @@
           </Transition>
           <Transition name="slide-up">
             <div class="absolute py-1.5 left-14 bg-[#262626] z-50 w-48 rounded-lg top-10 shadow-md border border-[#5f5f5f]" v-if="this.openSwitchNotebookMenu">
-              <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200" v-for="i in notebooks" @click="switchNotebook(i)">
-                <img src="./assets/material_symbols/book_2.svg">
-                <div class="flex flex-col justify-center text-white ml-1.5">
-                  {{ i.replace(/^.*[\\/]/, "") }}
-                </div>
-              </button>
+              <div v-for="i in notebooks">
+                <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200" v-if="i != currentNotebook" @click="switchNotebook(i)">
+                  <img src="./assets/material_symbols/book_2.svg">
+                  <div class="flex flex-col justify-center text-white ml-1.5">
+                    {{ i.replace(/^.*[\\/]/, "") }}
+                  </div>
+                </button>
+              </div>
             </div>
           </Transition>
       </div>
