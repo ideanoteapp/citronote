@@ -89,6 +89,19 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle("listFolders", (event, currentNotebook) => {
+    // Check for path existence
+    if (!fs.existsSync(currentNotebook)){
+      return
+    }
+    
+    // Check if there are any special paths
+    if (currentNotebook.includes("../")){
+      return
+    }
+    if (currentNotebook.includes("..\\")){
+      return
+    }
+
     const dir = currentNotebook
 
     let files = fs.readdirSync(dir);

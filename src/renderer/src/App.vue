@@ -9,16 +9,16 @@
             <img src="./assets/icon.png" alt="Menu" class="h-7 rounded-full">
           </div>
         </div>
-        <div class="flex flex-col justify-center px-3 text-white w-full duration-200 hover:bg-[#2d2d2d]" @click="this.openSwitchNotebookMenu = true">
+        <button class="flex flex-col justify-center px-3 text-white w-full duration-200 hover:bg-[#2d2d2d]" @click="this.openSwitchNotebookMenu = true">
           <div class="flex w-full">
-            <div class="flex-grow">
+            <div class="flex-grow text-left">
               {{ currentNotebook.replace(/^.*[\\/]/, "") }}
             </div>
             <div class="flex flex-col justify-center">
               <img src="./assets/material_symbols/arrow_drop_down.svg">
             </div>
           </div>
-        </div>
+        </button>
         <Transition name="fade">
             <div class="absolute w-screen h-screen left-0 top-0 bg-black opacity-40 z-20" v-if="this.openSwitchNotebookMenu" @click="this.openSwitchNotebookMenu = false"></div>
           </Transition>
