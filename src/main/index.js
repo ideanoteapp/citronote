@@ -102,20 +102,25 @@ app.whenReady().then(() => {
       return
     }
 
-    const dir = currentNotebook
-
-    let files = fs.readdirSync(dir);
-    let fileList = [];
-
-    files.forEach((file) => {
-      const filePath = path.join(dir, file);
-      const stat = fs.statSync(filePath);
-      if (stat.isDirectory()) {
-        fileList.push(filePath);
-      }
-    });
-
-    return fileList;
+    try {
+      const dir = currentNotebook
+      
+      let files = fs.readdirSync(dir);
+      let fileList = [];
+  
+      files.forEach((file) => {
+        const filePath = path.join(dir, file);
+        const stat = fs.statSync(filePath);
+        if (stat.isDirectory()) {
+          fileList.push(filePath);
+        }
+      });
+  
+      return fileList;
+    } catch (error) {
+      console.error("Error reading directory:", error);
+      return [];
+    }
   });
 
   createWindow()
