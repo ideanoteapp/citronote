@@ -37,8 +37,8 @@
       </div>
 
       <div class="mx-3 my-3">
-        <inFolder type="root" name="ルート" :is_current_folder="currentFolder === currentNotebook" @click="currentFolder = currentNotebook" />
-        <inFolder v-for="i in folders" type="folder" :name="i.replace(/^.*[\\/]/, '')" @click="currentFolder = i" :is_current_folder="currentFolder === i" />
+        <inFolder type="root" name="ルート" :is_current_folder="currentFolder === currentNotebook" @click="switchFolder(currentNotebook)" />
+        <inFolder v-for="i in folders" type="folder" :name="i.replace(/^.*[\\/]/, '')" @click="switchFolder(i)" :is_current_folder="currentFolder === i" />
       </div>
 
     </div>
@@ -61,10 +61,12 @@
         </div>
       </div>
 
-      <div>
-        <inNote type="scrap" name="ノート1" />
-        <inNote type="scrap" name="ノート2" />
-        <inNote type="scrap" name="ノート3" />
+      <div class="overflow-y-scroll h-[calc(100vh-52px)] max-h-[calc(100vh-52px)]">
+        <inNote 
+          :type="i.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0]"
+          :name="i.name.replace(/^.*[\\/]/, '').split('.').slice(0, -1).join('.')"
+          v-for="i in files"
+        />
       </div>
     </div>
 
@@ -108,7 +110,8 @@ export default {
 
       // Data
       notebooks: [],
-      folders: []
+      folders: [],
+      files: []
     }
   },
   mounted(){
@@ -117,7 +120,8 @@ export default {
       .then(result => {
         this.currentNotebook = result;
         this.currentFolder = this.currentNotebook;
-        this.getFolders()
+        this.getFolders();
+        this.getFiles();
       })
     
     // Get Notebooks
@@ -134,11 +138,22 @@ export default {
 
       // Reload files and folders
       this.getFolders()
+      this.getFiles()
+    },
+    switchFolder(i){
+      this.currentFolder = i
+      this.getFiles()
     },
     getFolders(){
       window.api.listFolders(this.currentNotebook)
         .then(result => {
           this.folders = result;
+        })
+    },
+    getFiles(){
+      window.api.listFiles(this.currentFolder)
+        .then(result => {
+          this.files = result;
         })
     }
   }
@@ -154,6 +169,17 @@ export default {
   .hover-light {
     @apply before:opacity-0 before:hover:opacity-100 before:absolute before:content-[''] before:bg-[#353535] before:p-4 before:rounded-full before:-ml-4 before:-mt-1 before:duration-200
   }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{
+   width: 8px;
+}
+::-webkit-scrollbar-track{
+   background-color: transparent;
+}
+::-webkit-scrollbar-thumb{
+   background-color: #515151;
 }
 
 /* Transition */
