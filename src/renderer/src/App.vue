@@ -154,6 +154,8 @@ export default {
       window.api.listFiles(this.currentFolder)
         .then(result => {
           this.files = result;
+        }).catch(error => {
+          console.log(error)
         })
     }
   }
