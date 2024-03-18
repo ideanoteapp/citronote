@@ -137,45 +137,50 @@ app.whenReady().then(() => {
       return
     }
 
-
-    let files = fs.readdirSync(dir);
-    let fileList = [];
+    try {
+      let files = fs.readdirSync(dir);
+      let fileList = [];
   
-    files.forEach((file) => {
-      const filePath = path.join(dir, file);
-      const stat = fs.statSync(filePath);
-      if (!stat.isDirectory()) {
-        let noteinfo = "";
-        if (
-          filePath.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] == "md" ||
-          filePath.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] == "txt"
-        ) {
-          fileList.push({
-            name: filePath,
-            info: fs.readFileSync(filePath, { encoding: "utf-8" }),
-            mtime: stat.mtime,
-          });
-        } else {
-          fileList.push({ name: filePath, info: "", mtime: stat.mtime });
+      files.forEach((file) => {
+        const filePath = path.join(dir, file);
+        const stat = fs.statSync(filePath);
+        if (!stat.isDirectory()) {
+          let noteinfo = "";
+          if (
+            filePath.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] == "md" ||
+            filePath.replace(/^.*[\\/]/, "").match(/[^.]+$/s)[0] == "txt"
+          ) {
+            fileList.push({
+              name: filePath,
+              info: fs.readFileSync(filePath, { encoding: "utf-8" }),
+              mtime: stat.mtime,
+            });
+          } else {
+            fileList.push({ name: filePath, info: "", mtime: stat.mtime });
+          }
         }
-      }
-    });
+      });
   
-    // Sort Files
-    fileList.sort((a, b) => {
-      const isAPinned = a.name.includes("#pin");
-      const isBPinned = b.name.includes("#pin");
+      // Sort Files
+      fileList.sort((a, b) => {
+        const isAPinned = a.name.includes("#pin");
+        const isBPinned = b.name.includes("#pin");
   
-      if (isAPinned && !isBPinned) {
-        return -1;
-      } else if (!isAPinned && isBPinned) {
-        return 1;
-      } else {
-        return b.mtime.getTime() - a.mtime.getTime();
-      }
-    });
+        if (isAPinned && !isBPinned) {
+          return -1;
+        } else if (!isAPinned && isBPinned) {
+          return 1;
+        } else {
+          return b.mtime.getTime() - a.mtime.getTime();
+        }
+      });
 
-    return fileList
+      return fileList
+
+    } catch (error) {
+      console.error(error)
+      return []
+    }
 
   });
 
