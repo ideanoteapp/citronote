@@ -44,7 +44,7 @@
     </div>
 
     <!-- Sidebar 2 -->
-    <div class="bg-[#2e2e2e] border-r border-[#424242] w-[286px]">
+    <div class="bg-[#2e2e2e] border-r border-[#424242] min-w-[286px] w-[286px]">
       <div class="bg-[#212121] h-[52px] w-full border-b border-[#424242] flex flex-col justify-center">
         <div class="flex justify-end mx-3">
           <button class="mx-1.5 hover-light">
@@ -65,7 +65,10 @@
         <inNote 
           :type="i.name.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0]"
           :name="i.name.replace(/^.*[\\/]/, '').split('.').slice(0, -1).join('.')"
+          :info="i.info.replace('\n', ' ')"
           v-for="i in files"
+          @click="openFile(i.name)"
+          :class="{'bg-[#353535]': currentFile === i.name}"
         />
       </div>
     </div>
@@ -83,6 +86,11 @@
           </button>
         </div>
       </div>
+      <div class="flex justify-center h-[calc(100%-52px)] overflow-hidden">
+        <div class="w-full max-w-[45rem] mx-[2rem] mt-6 h-[calc(100%-24px)] border-none focus:outline-0 text-white">
+          <inEditor v-if="currentFile" :path="currentFile" :text="currentFileData" :key="currentFile" @save="saveFile" />
+        </div>
+      </div>
     </div>
 
   </div>
@@ -92,12 +100,14 @@
 import inTurorialBalloon from './components/inTutorialBalloon.vue';
 import inFolder from './components/inFolder.vue'
 import inNote from './components/inNote.vue'
+import inEditor from './components/inEditor.vue'
 
 export default {
   components: {
     inTurorialBalloon,
     inFolder,
-    inNote
+    inNote,
+    inEditor
   },
   data: () => {
     return {
@@ -107,11 +117,15 @@ export default {
       // Paths
       currentNotebook: "",
       currentFolder: "",
+      currentFile: undefined,
 
-      // Data
+      // Files
       notebooks: [],
       folders: [],
-      files: []
+      files: [],
+
+      // Data
+      currentFileData: ""
     }
   },
   mounted(){
@@ -157,9 +171,23 @@ export default {
         }).catch(error => {
           console.log(error)
         })
+    },
+    openFile(path){
+      window.api.getFile(path)
+        .then(result => {
+          this.currentFileData = result
+          this.currentFile = path
+        }).catch(error => {
+          console.log(error)
+        })
+    },
+    saveFile(text){
+      window.api.saveFile(this.currentFile, text)
+        .catch(error => {
+          console.log(error)
+        })
     }
-  }
-}
+}}
 </script>
 
 <style>
