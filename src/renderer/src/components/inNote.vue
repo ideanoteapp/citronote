@@ -5,8 +5,10 @@
     <img src="../assets/material_symbols/contract.svg" alt="Scrap: " v-else-if="type === 'scrap'">
     <img src="../assets/material_symbols/image.svg" alt="Scrap: " v-else-if="type === 'png'">
     <img src="../assets/material_symbols/unknown_document.svg" alt="Scrap: " v-else>
-    <div class="text-white ml-2.5 text-[1.035rem] text-left">
-      {{ name }}
+    <div>
+      <div class="text-white ml-2.5 text-[1.035rem] text-left">
+        {{ name }}
+      </div>
     </div>
   </button>
 </template>
@@ -15,7 +17,8 @@
 export default {
   props: [
       "type",
-      "name"
+      "name",
+      "info"
   ]
 }
 </script>

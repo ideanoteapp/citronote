@@ -184,6 +184,14 @@ app.whenReady().then(() => {
 
   });
 
+  ipcMain.handle("getFile", (event, path) => {
+    return fs.readFileSync(path, { encoding: "utf8" })
+  });
+
+  ipcMain.handle("saveFile", (event, path, text) => {
+    return fs.writeFileSync(path, text, "utf-8");
+  });
+
   createWindow()
 
   app.on('activate', function () {
