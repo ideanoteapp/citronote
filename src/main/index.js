@@ -185,10 +185,36 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle("getFile", (event, path) => {
+    // Check for path existence
+    if (!fs.existsSync(path)){
+      return
+    }
+    
+    // Check if there are any special paths
+    if (path.includes("../")){
+      return
+    }
+    if (path.includes("..\\")){
+      return
+    }
+
     return fs.readFileSync(path, { encoding: "utf8" })
   });
 
   ipcMain.handle("saveFile", (event, path, text) => {
+    // Check for path existence
+    if (!fs.existsSync(path)){
+      return
+    }
+    
+    // Check if there are any special paths
+    if (path.includes("../")){
+      return
+    }
+    if (path.includes("..\\")){
+      return
+    }
+    
     return fs.writeFileSync(path, text, "utf-8");
   });
 
