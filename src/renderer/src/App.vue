@@ -259,6 +259,9 @@ export default {
           this.getFiles();
           this.openFile(res)
         });
+        .catch(error => {
+          console.log(error)
+        })
     }
 }}
 </script>
