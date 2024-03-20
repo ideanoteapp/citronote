@@ -183,6 +183,9 @@ export default {
     },
     saveFile(text){
       window.api.saveFile(this.currentFile, text)
+        .then(result => {
+          this.getFiles()
+        })
         .catch(error => {
           console.log(error)
         })
