@@ -5,15 +5,17 @@
       @change="changeNoteTitle"
       v-model="notetitle"
       style="outline: none !important; caret-color: white"
-      class="bg-transparent text-2xl flex-grow w-full focus:bg-[#303030] focus:mb-1.5 focus:text-[1.4rem] focus:rounded-xl focus:py-2 focus:pl-4 focus:pr-[-1rem]"
+      class="bg-transparent pb-1 text-2xl flex-grow w-full focus:bg-[#303030] focus:mb-1.5 focus:text-[1.4rem] focus:rounded-xl focus:py-2 focus:pl-4 focus:pr-[-1rem]"
       placeholder="Note Name"
     />
   </div>
   <textarea id="markdown-editor" v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'md'"></textarea>
-  <textarea class="w-full h-full bg-transparent" v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'txt'" style="outline: none !important; caret-color: white" @input="update" v-model="textarea"></textarea>
+  <textarea class="w-full h-full bg-transparent" v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'txt'" style="outline: none !important; caret-color: white" @input="update(textarea)" v-model="textarea"></textarea>
+  <inScrap v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'scrap'" :data="textarea" :key="textarea" @save="update" />
 </template>
 
 <script>
+import inScrap from "./inScrap.vue";
 import EasyMDE from "easymde";
 
 export default {
@@ -21,6 +23,9 @@ export default {
       "path",
       "text"
   ],
+  components: {
+    inScrap
+  },
   emits: ['save'],
   data: () => {
     return {
@@ -30,8 +35,8 @@ export default {
     }
   },
   methods: {
-    update(){
-      this.$emit("save", this.textarea);
+    update(data){
+      this.$emit("save", data);
     }
   },
   mounted(){
@@ -55,6 +60,7 @@ export default {
         status: false,
         forceSync: true,
         initialValue: this.textarea,
+        
         shortcuts: {
           togglePreview: null,
           toggleFullScreen: null,
