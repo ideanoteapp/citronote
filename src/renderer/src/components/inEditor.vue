@@ -13,10 +13,13 @@
   <div id="md-preview" v-html="parsedMd" v-show="isPreviewMd" class="mdcontent whitespace-pre-line flex flex-col"></div>
   <textarea class="w-full h-full bg-transparent" v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'txt'" style="outline: none !important; caret-color: white" @input="update(textarea)" v-model="textarea" placeholder="Type here..." v-focus></textarea>
   <inScrap v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'scrap'" :data="textarea" :key="textarea" @save="update" />
+  <inTodo v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'todo'" :text="textarea" :key="textarea" @save="update" />
 </template>
 
 <script>
 import inScrap from "./inScrap.vue";
+import inTodo from "./inTodo.vue";
+
 import EasyMDE from "easymde";
 import marked from "marked/marked.min.js";
 import hljs from "highlight.js"
@@ -34,7 +37,8 @@ export default {
       "text"
   ],
   components: {
-    inScrap
+    inScrap,
+    inTodo
   },
   emits: ['save', 'changeNoteTitle'],
   data: () => {
