@@ -258,7 +258,7 @@ export default {
         .then((res) => {
           this.getFiles();
           this.openFile(res)
-        });
+        })
         .catch(error => {
           console.log(error)
         })
