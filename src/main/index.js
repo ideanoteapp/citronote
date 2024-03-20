@@ -219,6 +219,14 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle("createNote", (event, path) => {
+    // Check if there are any special paths
+    if (path.includes("../")){
+      return
+    }
+    if (path.includes("..\\")){
+      return
+    }
+
     fs.writeFileSync(path, "")
     return
   });
