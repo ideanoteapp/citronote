@@ -10,7 +10,7 @@
     />
   </div>
   <textarea id="markdown-editor" v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'md'" v-show="!previewMd"></textarea>
-  <div id="md-preview" v-html="parsedMd" v-show="IfPreviewMd" class="mdcontent whitespace-pre-line flex flex-col"></div>
+  <div id="md-preview" v-html="parsedMd" v-show="isPreviewMd" class="mdcontent whitespace-pre-line flex flex-col"></div>
   <textarea class="w-full h-full bg-transparent" v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'txt'" style="outline: none !important; caret-color: white" @input="update(textarea)" v-model="textarea"></textarea>
   <inScrap v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'scrap'" :data="textarea" :key="textarea" @save="update" />
 </template>
@@ -36,7 +36,7 @@ export default {
       easyMDE: null,
       textarea: "",
       parsedMd: "",
-      IfPreviewMd: false
+      isPreviewMd: false
     }
   },
   methods: {
@@ -52,14 +52,14 @@ export default {
         element.remove();
       });
 
-      this.IfPreviewMd = true
+      this.isPreviewMd = true
 
       setTimeout(() => {
         hljs.highlightAll();
       }, 1);
     },
     exitPreview(){
-      this.IfPreviewMd = false
+      this.isPreviewMd = false
 
       this.easyMDE = new EasyMDE({
         element: document.getElementById("markdown-editor"),
