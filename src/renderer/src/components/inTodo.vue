@@ -9,8 +9,6 @@
         <div class="flex-grow text-white flex">
           <input
             type="checkbox"
-            name=""
-            id=""
             @change="save"
             v-model="i.checked"
             class="w-6 h-6"
