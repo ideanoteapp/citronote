@@ -36,7 +36,7 @@ export default {
   components: {
     inScrap
   },
-  emits: ['save'],
+  emits: ['save', 'changeNoteTitle'],
   data: () => {
     return {
       notetitle: "",
@@ -90,7 +90,10 @@ export default {
         this.$emit("save", this.easyMDE.value());
         this.textarea = this.easyMDE.value()
       });
-    }
+    },
+    changeNoteTitle() {
+      this.$emit("changeNoteTitle", this.notetitle);
+    },
   },
   mounted(){
     this.textarea = this.text

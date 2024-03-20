@@ -7,5 +7,6 @@ contextBridge.exposeInMainWorld("api", {
   listFiles: (dir) => ipcRenderer.invoke("listFiles", dir),
   getFile: (path) => ipcRenderer.invoke("getFile", path),
   saveFile: (path, text) => ipcRenderer.invoke("saveFile", path, text),
-  createNote: (path) => ipcRenderer.invoke("createNote", path)
+  createNote: (path) => ipcRenderer.invoke("createNote", path),
+  changeNoteTitle: (from, to) => ipcRenderer.invoke("changeNoteTitle", from, to)
 });

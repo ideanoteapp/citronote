@@ -231,6 +231,11 @@ app.whenReady().then(() => {
     return
   });
 
+  ipcMain.handle("changeNoteTitle", (event, from, to) => {
+    fs.renameSync(from, path.join(path.dirname(from), to));
+    return path.join(path.dirname(from), to);
+  });
+
   createWindow()
 
   app.on('activate', function () {

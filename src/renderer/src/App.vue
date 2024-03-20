@@ -121,7 +121,7 @@
       </div>
       <div class="flex justify-center h-[calc(100%-52px)] overflow-hidden">
         <div class="w-full max-w-[45rem] mx-[2rem] mt-6 h-[calc(100%-24px)] border-none focus:outline-0 text-white">
-          <inEditor v-if="currentFile" :path="currentFile" :text="currentFileData" :key="currentFile" @save="saveFile" ref="editor" />
+          <inEditor v-if="currentFile" :path="currentFile" :text="currentFileData" :key="currentFile" @save="saveFile" @changeNoteTitle="changeNoteTitle" ref="editor" />
         </div>
       </div>
     </div>
@@ -250,6 +250,15 @@ export default {
         })
       
         this.openCreateNoteMenu = false;
+    },
+    changeNoteTitle(notetitle) {
+      document.activeElement.blur();
+
+      window.api.changeNoteTitle(this.currentFile, notetitle + "." + this.currentFile.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0])
+        .then((res) => {
+          this.getFiles();
+          this.openFile(res)
+        });
     }
 }}
 </script>
