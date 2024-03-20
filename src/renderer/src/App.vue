@@ -102,19 +102,19 @@
     <div class="bg-[#1f1f1f] flex-grow">
       <div class="bg-[#202020] h-[52px] w-full border-b border-[#424242] flex flex-col justify-center">
         <div class="mx-4">
-          <button class="float-left">
+          <button class="float-left hover-light">
             <img src="./assets/material_symbols/dock_to_right.svg" alt="Note menu" class="opacity-80">
           </button>
 
-          <button class="float-right">
+          <button class="float-right hover-light">
             <img src="./assets/material_symbols/more_horiz.svg" alt="Note menu" class="opacity-80 w-5 h-5 border-2 rounded-full">
           </button>
 
-          <button class="float-right" @click="previewMd()" v-if="currentFile && currentFile.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'md' && !MdPreview">
+          <button class="float-right hover-light" @click="previewMd()" v-if="currentFile && currentFile.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'md' && !MdPreview">
             <img src="./assets/material_symbols/visibility.svg" alt="Preview" class="opacity-80 mr-3">
           </button>
 
-          <button class="float-right" @click="exitPreview()" v-if="currentFile && currentFile.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'md' && MdPreview">
+          <button class="float-right hover-light" @click="exitPreview()" v-if="currentFile && currentFile.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'md' && MdPreview">
             <img src="./assets/material_symbols/visibility_off.svg" alt="Exit Preview" class="opacity-80 mr-3">
           </button>
         </div>

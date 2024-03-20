@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col h-[calc(100%-50px)]">
     <div class="flex-grow overflow-y-scroll" ref="list">
-      <VueDraggable ref="el" v-model="list" animation="150" handle="#handle" @end="save()">
+      <VueDraggable ref="el" v-model="list" handle="#handle" @end="save()">
         <div class="bg-[#262626] border border-[#424242] rounded-lg px-4 py-2 w-full justify-between mb-2.5 duration-200" :class="{'bg-[#26334b]': index == editing}" v-for="i, index in list" :key="i">
           <div class="mt-0.5 float-right">
             <div class="flex">
@@ -143,8 +143,7 @@ export default {
 </script>
 
 <style>
-a {
-  color: #84a4f0;
-  text-decoration: underline;
+.sortable-ghost{
+  background-color: #26334b !important;
 }
 </style>
