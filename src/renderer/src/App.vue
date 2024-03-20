@@ -81,6 +81,12 @@
                   Scrap
                 </div>
               </button>
+              <button class="flex py-2 pr-7 px-3 hover:bg-[#353535] w-full duration-200" @click="createNote('todo')">
+                <img src="./assets/material_symbols/check_box.svg">
+                <div class="flex flex-col justify-center text-white ml-1.5">
+                  Todo
+                </div>
+              </button>
             </div>
           </Transition>
         </div>
