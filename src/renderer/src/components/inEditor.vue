@@ -9,9 +9,9 @@
       placeholder="Note Name"
     />
   </div>
-  <textarea id="markdown-editor" v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'md'" v-show="!previewMd"></textarea>
+  <textarea id="markdown-editor" v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'md'" v-show="!previewMd" placeholder="Type here..."  v-focus></textarea>
   <div id="md-preview" v-html="parsedMd" v-show="isPreviewMd" class="mdcontent whitespace-pre-line flex flex-col"></div>
-  <textarea class="w-full h-full bg-transparent" v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'txt'" style="outline: none !important; caret-color: white" @input="update(textarea)" v-model="textarea"></textarea>
+  <textarea class="w-full h-full bg-transparent" v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'txt'" style="outline: none !important; caret-color: white" @input="update(textarea)" v-model="textarea" placeholder="Type here..." v-focus></textarea>
   <inScrap v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'scrap'" :data="textarea" :key="textarea" @save="update" />
 </template>
 
@@ -21,7 +21,14 @@ import EasyMDE from "easymde";
 import marked from "marked/marked.min.js";
 import hljs from "highlight.js"
 
+const focus = {
+  mounted: (el) => el.focus()
+}
+
 export default {
+  directives: {
+    focus
+  },
   props: [
       "path",
       "text"
@@ -69,8 +76,9 @@ export default {
         toolbar: false,
         status: false,
         forceSync: true,
+        autofocus: true,
         initialValue: this.textarea,
-        
+        placeholder: "Type here...",
         shortcuts: {
           togglePreview: null,
           toggleFullScreen: null,
@@ -87,7 +95,11 @@ export default {
   mounted(){
     this.textarea = this.text
 
-    this.notetitle = this.path.replace(/^.*[\\/]/, '').split('.').slice(0, -1).join('.')
+    if (this.path.replace(/^.*[\\/]/, '').split('.').slice(0, -1).join('.').startsWith('$untitled-')){
+      this.notetitle = ""
+    }else{
+      this.notetitle = this.path.replace(/^.*[\\/]/, '').split('.').slice(0, -1).join('.')
+    }
 
     this.easyMDE = undefined;
     const elements = document.querySelectorAll(".EasyMDEContainer");
@@ -105,7 +117,8 @@ export default {
         status: false,
         forceSync: true,
         initialValue: this.textarea,
-        
+        autofocus: true,
+        placeholder: "Type here...",
         shortcuts: {
           togglePreview: null,
           toggleFullScreen: null,
@@ -119,6 +132,8 @@ export default {
         this.textarea = this.easyMDE.value();
       });
     }
+
+    
   }
 }
 </script>

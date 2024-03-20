@@ -6,7 +6,10 @@
     <img src="../assets/material_symbols/image.svg" alt="Scrap: " v-else-if="type === 'png'">
     <img src="../assets/material_symbols/unknown_document.svg" alt="Scrap: " v-else>
     <div>
-      <div class="text-white ml-2.5 text-[1.035rem] text-left">
+      <div class="text-white ml-2.5 text-[1.035rem] text-left" v-if="name.startsWith('$untitled-')">
+        New Note...
+      </div>
+      <div class="text-white ml-2.5 text-[1.035rem] text-left" v-else>
         {{ name }}
       </div>
     </div>

@@ -218,6 +218,11 @@ app.whenReady().then(() => {
     return fs.writeFileSync(path, text, "utf-8");
   });
 
+  ipcMain.handle("createNote", (event, path) => {
+    fs.writeFileSync(path, "")
+    return
+  });
+
   createWindow()
 
   app.on('activate', function () {

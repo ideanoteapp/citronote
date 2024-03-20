@@ -6,5 +6,6 @@ contextBridge.exposeInMainWorld("api", {
   listFolders: (currentNotebook) => ipcRenderer.invoke("listFolders", currentNotebook),
   listFiles: (dir) => ipcRenderer.invoke("listFiles", dir),
   getFile: (path) => ipcRenderer.invoke("getFile", path),
-  saveFile: (path, text) => ipcRenderer.invoke("saveFile", path, text)
+  saveFile: (path, text) => ipcRenderer.invoke("saveFile", path, text),
+  createNote: (path) => ipcRenderer.invoke("createNote", path)
 });

@@ -55,9 +55,34 @@
             <img src="./assets/material_symbols/markdown_white.svg" alt="Markdown" class="opacity-80">
           </button>
 
-          <button class="mx-1.5 hover-light">
+          <button class="mx-1.5 hover-light" @click="openCreateNoteMenu = true">
             <img src="./assets/material_symbols/edit_square.svg" alt="Markdown" class="opacity-80">
           </button>
+          <Transition name="fade">
+            <div class="absolute w-screen h-screen left-0 top-0 bg-black opacity-30 z-20" v-if="this.openCreateNoteMenu" @click="this.openCreateNoteMenu = false"></div>
+          </Transition>
+          <Transition name="slide-up">
+            <div class="absolute py-1.5 mt-8 bg-[#262626] z-50 rounded-lg shadow-md border border-[#5f5f5f]" v-if="this.openCreateNoteMenu">
+              <button class="flex py-2 pr-7 px-3 hover:bg-[#353535] w-full duration-200" @click="createNote('md')">
+                <img src="./assets/material_symbols/markdown.svg">
+                <div class="flex flex-col justify-center text-white ml-1.5">
+                  Markdown
+                </div>
+              </button>
+              <button class="flex py-2 pr-7 px-3 hover:bg-[#353535] w-full duration-200" @click="createNote('txt')">
+                <img src="./assets/material_symbols/notes.svg">
+                <div class="flex flex-col justify-center text-white ml-1.5">
+                  Plaintext
+                </div>
+              </button>
+              <button class="flex py-2 pr-7 px-3 hover:bg-[#353535] w-full duration-200" @click="createNote('scrap')">
+                <img src="./assets/material_symbols/contract.svg">
+                <div class="flex flex-col justify-center text-white ml-1.5">
+                  Scrap
+                </div>
+              </button>
+            </div>
+          </Transition>
         </div>
       </div>
 
@@ -121,6 +146,7 @@ export default {
     return {
       // Menu opens
       openSwitchNotebookMenu: false,
+      openCreateNoteMenu: false,
 
       // Paths
       currentNotebook: "",
@@ -162,6 +188,8 @@ export default {
       // Reload files and folders
       this.getFolders()
       this.getFiles()
+
+      this.currentFile = undefined
     },
     switchFolder(i){
       this.currentFolder = i
@@ -206,6 +234,22 @@ export default {
     exitPreview(){
       this.MdPreview = false
       this.$refs.editor.exitPreview()
+    },
+    createNote(extension){
+      const path = `$untitled-${Math.random()
+        .toString(36)
+        .slice(-8)}.${extension}`;
+      
+      window.api.createNote(this.currentFolder + "\\" + path)
+        .then(result => {
+          this.getFiles()
+          this.openFile(this.currentFolder + "\\" + path)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      
+        this.openCreateNoteMenu = false;
     }
 }}
 </script>
