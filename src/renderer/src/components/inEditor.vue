@@ -9,7 +9,8 @@
       placeholder="Note Name"
     />
   </div>
-  <textarea id="markdown-editor" v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'md'"></textarea>
+  <textarea id="markdown-editor" v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'md'" v-show="!previewMd"></textarea>
+  <div id="md-preview" v-html="parsedMd" v-show="isPreviewMd" class="mdcontent whitespace-pre-line flex flex-col"></div>
   <textarea class="w-full h-full bg-transparent" v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'txt'" style="outline: none !important; caret-color: white" @input="update(textarea)" v-model="textarea"></textarea>
   <inScrap v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'scrap'" :data="textarea" :key="textarea" @save="update" />
 </template>
@@ -17,6 +18,8 @@
 <script>
 import inScrap from "./inScrap.vue";
 import EasyMDE from "easymde";
+import marked from "marked/marked.min.js";
+import hljs from "highlight.js"
 
 export default {
   props: [
@@ -31,12 +34,54 @@ export default {
     return {
       notetitle: "",
       easyMDE: null,
-      textarea: ""
+      textarea: "",
+      parsedMd: "",
+      isPreviewMd: false
     }
   },
   methods: {
     update(data){
       this.$emit("save", data);
+    },
+    previewMd(){
+      this.parsedMd = marked.parse(this.textarea)
+
+      this.easyMDE = undefined;
+      const elements = document.querySelectorAll(".EasyMDEContainer");
+      elements.forEach((element) => {
+        element.remove();
+      });
+
+      this.isPreviewMd = true
+
+      setTimeout(() => {
+        hljs.highlightAll();
+      }, 1);
+    },
+    exitPreview(){
+      this.isPreviewMd = false
+
+      this.easyMDE = new EasyMDE({
+        element: document.getElementById("markdown-editor"),
+        autoDownloadFontAwesome: false,
+        spellChecker: false,
+        lineWrapping: true,
+        toolbar: false,
+        status: false,
+        forceSync: true,
+        initialValue: this.textarea,
+        
+        shortcuts: {
+          togglePreview: null,
+          toggleFullScreen: null,
+          toggleSideBySide: null,
+        }
+      });
+
+      this.easyMDE.codemirror.on("change", () => {
+        this.$emit("save", this.easyMDE.value());
+        this.textarea = this.easyMDE.value()
+      });
     }
   },
   mounted(){
@@ -71,6 +116,7 @@ export default {
       
       this.easyMDE.codemirror.on("change", () => {
         this.$emit("save", this.easyMDE.value());
+        this.textarea = this.easyMDE.value();
       });
     }
   }
@@ -79,7 +125,9 @@ export default {
 
 <style>
 @import "../../../../node_modules/easymde/dist/easymde.min.css";
+@import "../../../../node_modules/highlight.js/styles/atom-one-dark.css";
 
+/* EasyMDE */
 .editor-toolbar {
   background-color: #262626;
   border: none;
@@ -139,5 +187,79 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
 
 .CodeMirror-line, .CodeMirror-lines{
   padding: 0px !important;
+}
+
+/* Preview */
+
+.mdcontent h1 {
+  font-size: calc(1.325rem + 0.9vw);
+  font-weight: bold;
+}
+
+.mdcontent h2 {
+  font-size: calc(1.3rem + 0.6vw) !important;
+  font-weight: bold;
+}
+
+.mdcontent h3 {
+  font-size: calc(1.2rem + 0.3vw) !important;
+  font-weight: bold;
+}
+
+.mdcontent h4 {
+  font-size: calc(1.1rem + 0.2vw) !important;
+  font-weight: bold;
+}
+
+.mdcontent h5 {
+  font-size: calc(1.05rem + 0.1vw) !important;
+  font-weight: bold;
+}
+
+.mdcontent h6 {
+  font-size: calc(1rem) !important;
+  font-weight: bold;
+}
+
+.mdcontent strong {
+  text-decoration: underline; /* 下線 */
+  text-decoration-thickness: 0.5em; /* 線の太さ */
+  text-decoration-color: rgba(255, 230, 0, 0.5); /* 線の色 */
+  text-underline-offset: -0.2em; /* 線の位置。テキストに重なるようにやや上部にする */
+  text-decoration-skip-ink: none;
+  font-weight: bold;
+}
+
+.mdcontent blockquote {
+  border-left: 6px solid #ffffff50;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  margin: 6px;
+}
+
+.mdcontent a {
+  color: #84a4f0;
+  text-decoration: underline;
+}
+
+.mdcontent ul,
+ol {
+  display: flex;
+  flex-direction: column;
+}
+
+.mdcontent ul li {
+  list-style: disc;
+  list-style-position: inside;
+}
+
+.mdcontent ol li {
+  list-style: decimal;
+  list-style-position: inside;
+}
+
+.mdcontent pre code {
+  word-break: break-all;
 }
 </style>

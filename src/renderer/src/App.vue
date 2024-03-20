@@ -19,7 +19,7 @@
             </div>
           </div>
         </button>
-        <Transition name="fade">
+          <Transition name="fade">
             <div class="absolute w-screen h-screen left-0 top-0 bg-black opacity-40 z-20" v-if="this.openSwitchNotebookMenu" @click="this.openSwitchNotebookMenu = false"></div>
           </Transition>
           <Transition name="slide-up">
@@ -84,11 +84,19 @@
           <button class="float-right">
             <img src="./assets/material_symbols/more_horiz.svg" alt="Note menu" class="opacity-80 w-5 h-5 border-2 rounded-full">
           </button>
+
+          <button class="float-right" @click="previewMd()" v-if="currentFile && currentFile.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'md' && !MdPreview">
+            <img src="./assets/material_symbols/visibility.svg" alt="Preview" class="opacity-80 mr-3">
+          </button>
+
+          <button class="float-right" @click="exitPreview()" v-if="currentFile && currentFile.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'md' && MdPreview">
+            <img src="./assets/material_symbols/visibility_off.svg" alt="Exit Preview" class="opacity-80 mr-3">
+          </button>
         </div>
       </div>
       <div class="flex justify-center h-[calc(100%-52px)] overflow-hidden">
         <div class="w-full max-w-[45rem] mx-[2rem] mt-6 h-[calc(100%-24px)] border-none focus:outline-0 text-white">
-          <inEditor v-if="currentFile" :path="currentFile" :text="currentFileData" :key="currentFile" @save="saveFile" />
+          <inEditor v-if="currentFile" :path="currentFile" :text="currentFileData" :key="currentFile" @save="saveFile" ref="editor" />
         </div>
       </div>
     </div>
@@ -125,7 +133,8 @@ export default {
       files: [],
 
       // Data
-      currentFileData: ""
+      currentFileData: "",
+      MdPreview: false
     }
   },
   mounted(){
@@ -189,6 +198,14 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    previewMd(){
+      this.MdPreview = true
+      this.$refs.editor.previewMd()
+    },
+    exitPreview(){
+      this.MdPreview = false
+      this.$refs.editor.exitPreview()
     }
 }}
 </script>
