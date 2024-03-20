@@ -19,7 +19,7 @@
               <img src="../assets/material_symbols/list.svg" class="select-none opacity-70 mb-px -mr-0.5 w-[1rem] -translate-x-1.5" id="handle">
               <div class="text-xs opacity-70 mb-px">{{ i.date }}</div>
             </div>
-            <div class="break-all whitespace-pre-line" v-html="i.text"></div>
+            <div class="break-all whitespace-pre-line" v-html="parseURL(i.text)"></div>
           </div>
         </div>
       </VueDraggable>
@@ -89,8 +89,8 @@ export default {
         });
       },
       addText() {
+        var d = new Date();
         if (this.ifEditing) {
-          var d = new Date();
           this.list.splice(this.editing, 1, {
             text: this.input,
             date: this.list[this.editing].date,
@@ -100,7 +100,6 @@ export default {
           this.ifEditing = false;
           this.editing = -1;
         } else {
-          var d = new Date();
           this.list.push({
             text: this.input,
             date: `${d.getFullYear()}/${
@@ -116,6 +115,7 @@ export default {
         }
       },
       parseURL(string) {
+        string = this.toHtmlEntities(string)
         return string.replace(
           /\bhttps?:\/\/\S+/gi,
           (match) => `<a href="${match}">${match}</a>`,
@@ -141,3 +141,10 @@ export default {
     }
 }
 </script>
+
+<style>
+a {
+  color: #84a4f0;
+  text-decoration: underline;
+}
+</style>
