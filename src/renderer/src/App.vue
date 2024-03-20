@@ -239,4 +239,9 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }
+
+a {
+  color: #84a4f0;
+  text-decoration: underline;
+}
 </style>
