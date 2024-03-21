@@ -141,9 +141,33 @@
             <img src="./assets/material_symbols/dock_to_right.svg" alt="Note menu" class="opacity-80">
           </button>
 
-          <button class="float-right hover-light">
+          <button class="float-right hover-light" @click="openNoteMenu = true">
             <img src="./assets/material_symbols/more_horiz.svg" alt="Note menu" class="opacity-80 w-5 h-5 border-2 rounded-full">
           </button>
+
+          <Transition name="fade">
+            <div class="absolute w-screen h-screen left-0 top-0 bg-black opacity-40 z-20" v-if="this.openNoteMenu" @click="this.openNoteMenu = false"></div>
+          </Transition>
+          <Transition name="slide-up">
+            <div class="absolute py-1.5 right-3.5 bg-[#262626] z-50 w-48 rounded-lg top-10 shadow-md border border-[#5f5f5f]" v-if="this.openNoteMenu">
+              <div>
+                <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200">
+                  <img src="./assets/material_symbols/keep.svg">
+                  <div class="flex flex-col justify-center text-white ml-1.5 text-left">
+                    ノートをピン留め
+                  </div>
+                </button>
+              </div>
+              <div>
+                <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200" @click="deleteNote()">
+                  <img src="./assets/material_symbols/delete_red.svg">
+                  <div class="flex flex-col justify-center text-white ml-1.5 text-left">
+                    ノートを削除
+                  </div>
+                </button>
+              </div>
+            </div>
+          </Transition>
 
           <button class="float-right hover-light" @click="previewMd()" v-if="currentFile && currentFile.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'md' && !MdPreview">
             <img src="./assets/material_symbols/visibility.svg" alt="Preview" class="opacity-80 mr-3">
@@ -182,6 +206,7 @@ export default {
       // Menu opens
       openSwitchNotebookMenu: false,
       openCreateNoteMenu: false,
+      openNoteMenu: false,
 
       // Paths
       currentNotebook: "",
@@ -328,6 +353,16 @@ export default {
             })
           
           this.switchNotebook(this.notebooks[0])
+        }).catch((error) => {
+          console.log(error)
+        })
+    },
+    deleteNote() {
+      this.openNoteMenu = false
+      
+      window.api.deleteNote(this.currentFile)
+        .then(res => {
+          this.getFiles()
         }).catch((error) => {
           console.log(error)
         })
