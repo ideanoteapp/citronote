@@ -2,7 +2,7 @@
   <div class="flex h-screen">
 
     <!-- Sidebar 1 -->
-    <div class="max-w-[100vw] h-screen min-w-[180px] lg:min-w-[200px] w-[180px] bg-[#262626] border-r border-[#424242] select-none">
+    <div class="max-w-[100vw] h-screen min-w-[180px] lg:min-w-[200px] w-[180px] bg-[#262626] border-r border-[#424242] select-none" v-if="!hideSidebar">
       <div class="bg-[#202020] h-[52px] w-full border-b border-[#424242] flex">
         <div class="min-w-[51px] w-[51px] h-[51px] border-r border-[#424242] flex flex-col justify-center duration-200 hover:bg-[#2d2d2d]">
           <div class="flex justify-center">
@@ -82,7 +82,7 @@
     </div>
 
     <!-- Sidebar 2 -->
-    <div class="bg-[#2e2e2e] border-r border-[#424242] min-w-[286px] w-[286px] select-none">
+    <div class="bg-[#2e2e2e] border-r border-[#424242] min-w-[286px] w-[286px] select-none" v-if="!hideSidebar">
       <div class="bg-[#212121] h-[52px] w-full border-b border-[#424242] flex flex-col justify-center">
         <div class="flex justify-end mx-3">
           <button class="mx-1.5 hover-light">
@@ -146,7 +146,7 @@
     <div class="bg-[#1f1f1f] flex-grow">
       <div class="bg-[#202020] h-[52px] w-full border-b border-[#424242] flex flex-col justify-center select-none">
         <div class="mx-4">
-          <button class="float-left hover-light">
+          <button class="float-left hover-light" @click="hideSidebar = !hideSidebar">
             <img src="./assets/material_symbols/dock_to_right.svg" alt="Note menu" class="opacity-80">
           </button>
 
@@ -229,7 +229,8 @@ export default {
 
       // Data
       currentFileData: "",
-      MdPreview: false
+      MdPreview: false,
+      hideSidebar: false
     }
   },
   mounted(){
