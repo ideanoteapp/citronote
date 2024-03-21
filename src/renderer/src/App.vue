@@ -65,11 +65,20 @@
           </Transition>
       </div>
 
-      <div class="px-3 my-3 overflow-y-scroll max-h-[calc(100vh-64px)]">
-        <inFolder type="root" name="ルート" :is_current_folder="currentFolder === currentNotebook" @click="switchFolder(currentNotebook)" />
-        <inFolder v-for="i in folders" type="folder" :name="i.replace(/^.*[\\/]/, '')" @click="switchFolder(i)" :is_current_folder="currentFolder === i" />
+      <div class="flex flex-col h-[calc(100vh-52px)]">
+        <div class="px-3 my-3 overflow-y-scroll flex-grow max-h-[calc(100vh-64px)]">
+          <inFolder type="root" name="ルート" :is_current_folder="currentFolder === currentNotebook" @click="switchFolder(currentNotebook)" />
+          <inFolder v-for="i in folders" type="folder" :name="i.replace(/^.*[\\/]/, '')" @click="switchFolder(i)" :is_current_folder="currentFolder === i" />
+        </div>
+        <a href="https://wv5swdgqa69.typeform.com/to/ec8tXVs7">
+          <div class="border-t border-t-[#424242] flex py-2.5 px-2.5 hover:bg-[#2d2d2d] duration-200">
+            <img src="./assets/material_symbols/mail.svg">
+            <div class="text-white ml-1.5 no-underline">
+              意見を送る
+            </div>
+          </div>
+        </a>
       </div>
-
     </div>
 
     <!-- Sidebar 2 -->
@@ -420,6 +429,5 @@ export default {
 
 a {
   color: #84a4f0;
-  text-decoration: underline;
 }
 </style>
