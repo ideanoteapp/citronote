@@ -195,6 +195,9 @@ export default {
       this.getFolders()
       this.getFiles()
 
+      // setCurrentNotebook
+      window.api.setCurrentNotebook(this.currentNotebook)
+
       this.currentFile = undefined
     },
     switchFolder(i){

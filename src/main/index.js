@@ -88,6 +88,12 @@ app.whenReady().then(() => {
     });
   });
 
+  ipcMain.handle("setCurrentNotebook", (event, notebook) => {
+    fs.writeFileSync(path.join(userDataPath, "currentnotebook.txt"), notebook, {
+      encoding: "utf-8",
+    });
+  });
+
   ipcMain.handle("listFolders", (event, currentNotebook) => {
     // Check for path existence
     if (!fs.existsSync(currentNotebook)){
