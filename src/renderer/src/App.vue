@@ -25,12 +25,12 @@
           <Transition name="slide-up">
             <div class="absolute py-1.5 left-14 bg-[#262626] z-50 w-48 rounded-lg top-10 shadow-md border border-[#5f5f5f]" v-if="this.openSwitchNotebookMenu">
               <div>
-                <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200" @click="switchNotebook(i)">
+                <div class="flex py-2 px-3 w-full">
                   <img src="./assets/material_symbols/book_2.svg">
                   <div class="flex flex-col justify-center text-white ml-1.5 text-left">
                     {{ currentNotebook.replace(/^.*[\\/]/, "") }}
                   </div>
-                </button>
+                </div>
               </div>
 
               <div>
