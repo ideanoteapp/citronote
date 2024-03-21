@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 const path = require("path");
@@ -25,7 +25,7 @@ if (!fs.existsSync(foldersPath)) {
 }
 
 // Load folders.json
-const folders = JSON.parse(fs.readFileSync(path.join(userDataPath, "folders.json"), {encoding: "utf-8",}));
+let folders = JSON.parse(fs.readFileSync(path.join(userDataPath, "folders.json"), {encoding: "utf-8",}));
 
 function createWindow() {
   // Create the browser window.
@@ -102,6 +102,44 @@ app.whenReady().then(() => {
     fs.writeFileSync(path.join(userDataPath, "currentnotebook.txt"), notebook, {
       encoding: "utf-8",
     });
+  });
+
+  ipcMain.handle("addNotebook", async (event) => {
+    let res
+
+    await dialog
+      .showOpenDialog({
+        properties: ["openDirectory"],
+        title: "追加するフォルダーを選択してください"
+      })
+      .then((result) => {
+        if(result.filePaths[0]){
+          folders.push(result.filePaths[0]);
+          fs.writeFileSync(
+            path.join(userDataPath, "folders.json"),
+            JSON.stringify(folders),
+            {
+              encoding: "utf-8",
+            },
+          );
+
+          res = result.filePaths[0]
+        }
+      });
+
+    return res
+  });
+
+  ipcMain.handle("removeNotebook", (even, currentNotebook) => {
+    folders = folders.filter(item => item !== currentNotebook);
+
+    fs.writeFileSync(
+      path.join(userDataPath, "folders.json"),
+      JSON.stringify(folders),
+      {
+        encoding: "utf-8",
+      },
+    );
   });
 
   ipcMain.handle("listFolders", (event, currentNotebook) => {

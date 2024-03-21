@@ -24,11 +24,40 @@
           </Transition>
           <Transition name="slide-up">
             <div class="absolute py-1.5 left-14 bg-[#262626] z-50 w-48 rounded-lg top-10 shadow-md border border-[#5f5f5f]" v-if="this.openSwitchNotebookMenu">
+              <div>
+                <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200" @click="switchNotebook(i)">
+                  <img src="./assets/material_symbols/book_2.svg">
+                  <div class="flex flex-col justify-center text-white ml-1.5 text-left">
+                    {{ currentNotebook.replace(/^.*[\\/]/, "") }}
+                  </div>
+                </button>
+              </div>
+
+              <div>
+                <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200" @click="removeNotebook()">
+                  <img src="./assets/material_symbols/delete_red.svg" class="h-5">
+                  <div class="text-sm flex flex-col justify-center text-white ml-1.5 text-left">
+                    ノートブックを削除
+                  </div>
+                </button>
+              </div>
+
+              <div class="my-1 border-b border-[#5f5f5f]"></div>
+
               <div v-for="i in notebooks">
                 <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200" v-if="i != currentNotebook" @click="switchNotebook(i)">
                   <img src="./assets/material_symbols/book_2.svg">
-                  <div class="flex flex-col justify-center text-white ml-1.5">
+                  <div class="flex flex-col justify-center text-white ml-1.5 text-left">
                     {{ i.replace(/^.*[\\/]/, "") }}
+                  </div>
+                </button>
+              </div>
+
+              <div>
+                <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200" @click="addNotebook()">
+                  <img src="./assets/material_symbols/add.svg">
+                  <div class="flex flex-col justify-center text-white ml-1.5 text-left">
+                    ノートブックを追加
                   </div>
                 </button>
               </div>
@@ -36,7 +65,7 @@
           </Transition>
       </div>
 
-      <div class="mx-3 my-3">
+      <div class="px-3 my-3 overflow-y-scroll max-h-[calc(100vh-64px)]">
         <inFolder type="root" name="ルート" :is_current_folder="currentFolder === currentNotebook" @click="switchFolder(currentNotebook)" />
         <inFolder v-for="i in folders" type="folder" :name="i.replace(/^.*[\\/]/, '')" @click="switchFolder(i)" :is_current_folder="currentFolder === i" />
       </div>
@@ -269,6 +298,37 @@ export default {
           this.openFile(res)
         })
         .catch(error => {
+          console.log(error)
+        })
+    },
+    addNotebook() {
+      window.api.addNotebook()
+        .then(res => {
+          this.openSwitchNotebookMenu = false
+
+          if(res){
+            window.api.listNotebooks()
+              .then(result => {
+                this.notebooks = result;
+              })
+            this.switchNotebook(res)
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+    },
+    removeNotebook() {
+      window.api.removeNotebook(this.currentNotebook)
+        .then(res => {
+          this.openSwitchNotebookMenu = false
+
+          window.api.listNotebooks()
+            .then(result => {
+              this.notebooks = result;
+            })
+          
+          this.switchNotebook(this.notebooks[0])
+        }).catch((error) => {
           console.log(error)
         })
     }
