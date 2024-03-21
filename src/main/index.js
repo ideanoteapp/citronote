@@ -9,7 +9,7 @@ const userDataPath = app.getPath("userData");
 const configPath = path.join(userDataPath, "currentnotebook.txt");
 
 if (!fs.existsSync(path.join(userDataPath, "currentnotebook.txt"))) {
-  fs.writeFileSync(path.join(userDataPath, "currentnotebook.txt"));
+  fs.writeFileSync(path.join(userDataPath, "currentnotebook.txt"), "");
 }
 
 // Create the notebooks folder if it doesn't exist
