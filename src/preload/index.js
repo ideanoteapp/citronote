@@ -11,5 +11,6 @@ contextBridge.exposeInMainWorld("api", {
   getFile: (path) => ipcRenderer.invoke("getFile", path),
   saveFile: (path, text) => ipcRenderer.invoke("saveFile", path, text),
   createNote: (path) => ipcRenderer.invoke("createNote", path),
-  changeNoteTitle: (from, to) => ipcRenderer.invoke("changeNoteTitle", from, to)
+  changeNoteTitle: (from, to) => ipcRenderer.invoke("changeNoteTitle", from, to),
+  deleteNote: (path) => ipcRenderer.invoke("deleteNote", path)
 });
