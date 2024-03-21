@@ -17,6 +17,16 @@ if (!fs.existsSync(path.join(userDataPath, "notebooks/"))) {
   fs.mkdirSync(path.join(userDataPath, "notebooks/"));
 }
 
+// Create folders.json if it doesn't exist
+const foldersPath = path.join(userDataPath, "folders.json");
+
+if (!fs.existsSync(foldersPath)) {
+  fs.writeFileSync(foldersPath, "[]");
+}
+
+// Load folders.json
+const folders = JSON.parse(fs.readFileSync(path.join(userDataPath, "folders.json"), {encoding: "utf-8",}));
+
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -79,7 +89,7 @@ app.whenReady().then(() => {
       }
     });
 
-    return fileList;
+    return fileList.concat(folders);
   });
 
   ipcMain.handle("getCurrentNotebook", (event) => {
