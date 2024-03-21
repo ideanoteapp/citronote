@@ -363,6 +363,7 @@ export default {
       window.api.deleteNote(this.currentFile)
         .then(res => {
           this.getFiles()
+          this.currentFile = undefined
         }).catch((error) => {
           console.log(error)
         })
