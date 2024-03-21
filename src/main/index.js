@@ -32,6 +32,15 @@ function createWindow() {
     }
   })
 
+  const handleUrlOpen = (e, url)=>{
+    if( url.match(/^http/)){
+      e.preventDefault()
+      shell.openExternal(url)
+    }
+  }
+  mainWindow.webContents.on('will-navigate', handleUrlOpen);
+  mainWindow.webContents.on('new-window', handleUrlOpen);
+
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
