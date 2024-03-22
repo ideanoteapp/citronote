@@ -37,7 +37,7 @@
                 <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200" @click="removeNotebook()">
                   <img src="./assets/material_symbols/delete_red.svg" class="h-5">
                   <div class="text-sm flex flex-col justify-center text-white ml-1.5 text-left">
-                    ノートブックを削除
+                    {{ i18n.delete_notebook }}
                   </div>
                 </button>
               </div>
@@ -57,7 +57,7 @@
                 <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200" @click="addNotebook()">
                   <img src="./assets/material_symbols/add.svg">
                   <div class="flex flex-col justify-center text-white ml-1.5 text-left">
-                    ノートブックを追加
+                    {{ i18n.add_notebook }}
                   </div>
                 </button>
               </div>
@@ -67,14 +67,14 @@
 
       <div class="flex flex-col h-[calc(100vh-52px)]">
         <div class="px-3 my-3 overflow-y-scroll flex-grow max-h-[calc(100vh-64px)]">
-          <inFolder type="root" name="ルート" :is_current_folder="currentFolder === currentNotebook" @click="switchFolder(currentNotebook)" />
+          <inFolder type="root" :name="i18n.root" :is_current_folder="currentFolder === currentNotebook" @click="switchFolder(currentNotebook)" />
           <inFolder v-for="i in folders" type="folder" :name="i.replace(/^.*[\\/]/, '')" @click="switchFolder(i)" :is_current_folder="currentFolder === i" />
         </div>
         <a href="https://wv5swdgqa69.typeform.com/to/ec8tXVs7">
           <div class="border-t border-t-[#424242] flex py-2.5 px-2.5 hover:bg-[#2d2d2d] duration-200">
             <img src="./assets/material_symbols/mail.svg">
             <div class="text-white ml-1.5 no-underline">
-              意見を送る
+              {{ i18n.send_feedback }}
             </div>
           </div>
         </a>
@@ -171,7 +171,7 @@
                 <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200" @click="deleteNote()">
                   <img src="./assets/material_symbols/delete_red.svg">
                   <div class="flex flex-col justify-center text-white ml-1.5 text-left">
-                    ノートを削除
+                    {{ i18n.delete_note }}
                   </div>
                 </button>
               </div>
@@ -212,6 +212,9 @@ export default {
   },
   data: () => {
     return {
+      // Locale
+      i18n: {},
+
       // Menu opens
       openSwitchNotebookMenu: false,
       openCreateNoteMenu: false,
@@ -234,6 +237,14 @@ export default {
     }
   },
   mounted(){
+    // Get locales
+    window.api.getLocales()
+      .then(result => {
+        this.i18n = result;
+      }).catch(error => {
+        console.error(error)
+      })
+
     // Get current notebook
     window.api.getCurrentNotebook()
       .then(result => {

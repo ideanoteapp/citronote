@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 const path = require("path");
@@ -12,10 +12,16 @@ if (!fs.existsSync(path.join(userDataPath, "currentnotebook.txt"))) {
   fs.writeFileSync(path.join(userDataPath, "currentnotebook.txt"), "");
 }
 
+if (!fs.existsSync(path.join(userDataPath, "folders.json"))) {
+  fs.writeFileSync(path.join(userDataPath, "folders.json"), "{}");
+}
+
 // Create the notebooks folder if it doesn't exist
 if (!fs.existsSync(path.join(userDataPath, "notebooks/"))) {
   fs.mkdirSync(path.join(userDataPath, "notebooks/"));
 }
+
+let folders = JSON.parse(fs.readFileSync(path.join(userDataPath, "folders.json"), {encoding: "utf-8",}));
 
 function createWindow() {
   // Create the browser window.
@@ -74,6 +80,15 @@ app.whenReady().then(() => {
   })
 
   // IPC
+  ipcMain.handle("getLocales", (event) => {
+    const lang = app.getLocale()
+    if (fs.existsSync(`./locales/${lang}.json`)){
+      return JSON.parse(fs.readFileSync(`./locales/${lang}.json`, { encoding: "utf-8" }))
+    }else{
+      return JSON.parse(fs.readFileSync(`./locales/en-US.json`, { encoding: "utf-8" }))
+    }
+  });
+
   ipcMain.handle("listNotebooks", (event) => {
     const dir = path.join(userDataPath, "notebooks/")
 
@@ -102,6 +117,47 @@ app.whenReady().then(() => {
       encoding: "utf-8",
     });
   });
+  
+  
+  ipcMain.handle("addNotebook", async (event) => {
+    let res
+
+    await dialog
+      .showOpenDialog({
+        properties: ["openDirectory"],
+        title: "追加するフォルダーを選択してください"
+      })
+      .then((result) => {
+        if(result.filePaths[0]){
+          folders.push(result.filePaths[0]);
+          fs.writeFileSync(
+            path.join(userDataPath, "folders.json"),
+            JSON.stringify(folders),
+            {
+              encoding: "utf-8",
+            },
+          );
+
+          res = result.filePaths[0]
+        }
+      });
+
+    return res
+  });
+
+  ipcMain.handle("removeNotebook", (even, currentNotebook) => {
+    folders = folders.filter(item => item !== currentNotebook);
+
+    fs.writeFileSync(
+      path.join(userDataPath, "folders.json"),
+      JSON.stringify(folders),
+      {
+        encoding: "utf-8",
+      },
+    );
+  });
+
+  ipcMain
 
   ipcMain.handle("listFolders", (event, currentNotebook) => {
     // Check for path existence
