@@ -5,8 +5,10 @@
     </div>
 
     <div>
+      <VueDraggable ref="el" v-model="list" handle="#handle" @end="save()">
       <div v-for="i in list" class="flex rounded-lg text- py-1">
         <div class="flex-grow text-white flex">
+          <img src="../assets/material_symbols/list.svg" class="select-none opacity-70 mr-1.5 w-[1.1rem] mb-px" id="handle">
           <input
             type="checkbox"
             @change="save"
@@ -21,6 +23,7 @@
           </button>
         </div>
       </div>
+      </VueDraggable>
     </div>
     <form
       @submit.prevent="addText"
@@ -28,7 +31,7 @@
     >
       <input
         v-model="input"
-        class="rounded-lg text-white flex-grow p-2 bg-transparent"
+        class="rounded-lg text-white flex-grow py-2 px-3 bg-transparent"
         style="outline: none !important; resize: none; caret-color: white"
         placeholder="Type here..."
       />
@@ -45,6 +48,8 @@
 </template>
 
 <script>
+import { VueDraggable } from 'vue-draggable-plus'
+
 export default {
   props: ["text"],
   data: () => {
@@ -53,6 +58,9 @@ export default {
       input: "",
       progress: 0
     };
+  },
+  components: {
+    VueDraggable
   },
   mounted() {
     if (this.text != "") {
