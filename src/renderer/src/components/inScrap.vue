@@ -2,7 +2,7 @@
   <div class="flex flex-col h-[calc(100%-50px)]">
     <div class="flex-grow overflow-y-scroll" ref="list">
       <VueDraggable ref="el" v-model="list" handle="#handle" @end="save()">
-        <div class="bg-[#262626] border border-[#424242] rounded-lg px-4 py-2 w-full justify-between mb-2.5 duration-200" :class="{'bg-[#26334b]': index == editing}" v-for="i, index in list" :key="i">
+        <div class="bg-sidebar1 border border-border rounded-lg px-4 py-2 w-full justify-between mb-2.5 duration-200" :class="{'bg-[#26334b]': index == editing}" v-for="i, index in list" :key="i">
           <div class="mt-0.5 float-right">
             <div class="flex">
               <button @click="startEdit(index)" class="opacity-70 hover:opacity-90 duration-200 w-5 h-5">
@@ -28,7 +28,7 @@
     <div class="my-4">
       <form
       @submit.prevent="addText"
-      class="flex items-end bg-[#262626] rounded-lg border border-[#3a3a3a]"
+      class="flex items-end bg-sidebar1 rounded-lg border border-border"
     >
       <textarea
         v-model="input"
@@ -40,7 +40,7 @@
       ></textarea>
       <button
         type="submit"
-        class="mx-3 mb-3 rounded-lg w-10 h-10 flex justify-center flex-col text-center bg-[#2F497D]"
+        class="mx-3 mb-3 rounded-lg w-10 h-10 flex justify-center flex-col text-center bg-primary"
       >
         <div class="flex justify-center w-full flex-row">
           <img src="../assets/material_symbols/edit.svg" alt="Edit" v-if="ifEditing">

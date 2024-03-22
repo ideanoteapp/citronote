@@ -1,15 +1,35 @@
 <template>
+  <div :class="{'theme-dracula': preferences.theme === 'dracula', 'theme-monokai-classic': preferences.theme === 'monokai-classic', 'theme-solarized-dark': preferences.theme === 'solarized-dark'}">
   <div class="flex h-screen">
 
     <!-- Sidebar 1 -->
-    <div class="max-w-[100vw] h-screen min-w-[180px] lg:min-w-[200px] w-[180px] bg-[#262626] border-r border-[#424242] select-none" v-if="!hideSidebar">
-      <div class="bg-[#202020] h-[52px] w-full border-b border-[#424242] flex">
-        <div class="min-w-[51px] w-[51px] h-[51px] border-r border-[#424242] flex flex-col justify-center duration-200 hover:bg-[#2d2d2d]">
-          <div class="flex justify-center">
-            <img src="./assets/icon.png" alt="Menu" class="h-7 rounded-full">
+    <div class="max-w-[100vw] h-screen min-w-[180px] lg:min-w-[200px] w-[180px] bg-sidebar1 border-r border-border select-none" v-if="!hideSidebar">
+      <div class="bg-header h-[52px] w-full border-b border-border flex">
+        <button class="min-w-[51px] w-[51px] h-[51px] border-r border-border  duration-200 hover:bg-hover2" @click="openMenu = true">
+          <div class="flex flex-col justify-center">
+            <div class="flex justify-center">
+              <img src="./assets/icon.png" alt="Menu" class="h-7 rounded-full">
+            </div>
           </div>
-        </div>
-        <button class="flex flex-col justify-center px-3 text-white w-full duration-200 hover:bg-[#2d2d2d]" @click="this.openSwitchNotebookMenu = true">
+        </button>
+
+        <Transition name="fade">
+            <div class="absolute w-screen h-screen left-0 top-0 bg-black opacity-40 z-20" v-if="this.openMenu" @click="this.openMenu = false"></div>
+        </Transition>
+        <Transition name="slide-up">
+            <div class="absolute py-1.5 left-2.5 bg-sidebar1 z-50 w-48 rounded-lg top-10 shadow-md border border-border" v-if="this.openMenu">
+              <div>
+                <button class="flex py-2 px-3 hover:bg-hover w-full duration-200" @click="openPreferences = true; openMenu = false;">
+                  <img src="./assets/material_symbols/settings.svg">
+                  <div class="flex flex-col justify-center text-white ml-1.5 text-left">
+                    {{ i18n.preferences }}
+                  </div>
+                </button>
+              </div>
+            </div>
+        </Transition>
+
+        <button class="flex flex-col justify-center px-3 text-white w-full duration-200 hover:bg-hover2" @click="this.openSwitchNotebookMenu = true">
           <div class="flex w-full">
             <div class="flex-grow text-left">
               {{ currentNotebook.replace(/^.*[\\/]/, "") }}
@@ -23,7 +43,7 @@
             <div class="absolute w-screen h-screen left-0 top-0 bg-black opacity-40 z-20" v-if="this.openSwitchNotebookMenu" @click="this.openSwitchNotebookMenu = false"></div>
           </Transition>
           <Transition name="slide-up">
-            <div class="absolute py-1.5 left-14 bg-[#262626] z-50 w-48 rounded-lg top-10 shadow-md border border-[#5f5f5f]" v-if="this.openSwitchNotebookMenu">
+            <div class="absolute py-1.5 left-14 bg-sidebar1 z-50 w-48 rounded-lg top-10 shadow-md border border-border" v-if="this.openSwitchNotebookMenu">
               <div>
                 <div class="flex py-2 px-3 w-full">
                   <img src="./assets/material_symbols/book_2.svg">
@@ -34,7 +54,7 @@
               </div>
 
               <div>
-                <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200" @click="removeNotebook()">
+                <button class="flex py-2 px-3 hover:bg-hover w-full duration-200" @click="removeNotebook()">
                   <img src="./assets/material_symbols/delete_red.svg" class="h-5">
                   <div class="text-sm flex flex-col justify-center text-white ml-1.5 text-left">
                     {{ i18n.delete_notebook }}
@@ -42,10 +62,10 @@
                 </button>
               </div>
 
-              <div class="my-1 border-b border-[#5f5f5f]"></div>
+              <div class="my-1 border-b border-border"></div>
 
               <div v-for="i in notebooks">
-                <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200" v-if="i != currentNotebook" @click="switchNotebook(i)">
+                <button class="flex py-2 px-3 hover:bg-hover w-full duration-200" v-if="i != currentNotebook" @click="switchNotebook(i)">
                   <img src="./assets/material_symbols/book_2.svg">
                   <div class="flex flex-col justify-center text-white ml-1.5 text-left">
                     {{ i.replace(/^.*[\\/]/, "") }}
@@ -54,7 +74,7 @@
               </div>
 
               <div>
-                <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200" @click="addNotebook()">
+                <button class="flex py-2 px-3 hover:bg-hover w-full duration-200" @click="addNotebook()">
                   <img src="./assets/material_symbols/add.svg">
                   <div class="flex flex-col justify-center text-white ml-1.5 text-left">
                     {{ i18n.add_notebook }}
@@ -71,7 +91,7 @@
           <inFolder v-for="i in folders" type="folder" :name="i.replace(/^.*[\\/]/, '')" @click="switchFolder(i)" :is_current_folder="currentFolder === i" />
         </div>
         <a href="https://wv5swdgqa69.typeform.com/to/ec8tXVs7">
-          <div class="border-t border-t-[#424242] flex py-2.5 px-2.5 hover:bg-[#2d2d2d] duration-200">
+          <div class="border-t border-t-border flex py-2.5 px-2.5 hover:bg-hover2 duration-200">
             <img src="./assets/material_symbols/mail.svg">
             <div class="text-white ml-1.5 no-underline">
               {{ i18n.send_feedback }}
@@ -82,8 +102,8 @@
     </div>
 
     <!-- Sidebar 2 -->
-    <div class="bg-[#2e2e2e] border-r border-[#424242] min-w-[286px] w-[286px] select-none" v-if="!hideSidebar">
-      <div class="bg-[#212121] h-[52px] w-full border-b border-[#424242] flex flex-col justify-center">
+    <div class="bg-sidebar2 border-r border-border min-w-[286px] w-[286px] select-none" v-if="!hideSidebar">
+      <div class="bg-header h-[52px] w-full border-b border-border flex flex-col justify-center">
         <div class="flex justify-end mx-3">
           <button class="mx-1.5 hover-light">
             <img src="./assets/material_symbols/contract_white.svg" alt="Markdown" class="opacity-80">
@@ -100,26 +120,26 @@
             <div class="absolute w-screen h-screen left-0 top-0 bg-black opacity-30 z-20" v-if="this.openCreateNoteMenu" @click="this.openCreateNoteMenu = false"></div>
           </Transition>
           <Transition name="slide-up">
-            <div class="absolute py-1.5 mt-8 bg-[#262626] z-50 rounded-lg shadow-md border border-[#5f5f5f]" v-if="this.openCreateNoteMenu">
-              <button class="flex py-2 pr-7 px-3 hover:bg-[#353535] w-full duration-200" @click="createNote('md')">
+            <div class="absolute py-1.5 mt-8 bg-sidebar1 z-50 rounded-lg shadow-md border border-border" v-if="this.openCreateNoteMenu">
+              <button class="flex py-2 pr-7 px-3 hover:bg-hover w-full duration-200" @click="createNote('md')">
                 <img src="./assets/material_symbols/markdown.svg">
                 <div class="flex flex-col justify-center text-white ml-1.5">
                   Markdown
                 </div>
               </button>
-              <button class="flex py-2 pr-7 px-3 hover:bg-[#353535] w-full duration-200" @click="createNote('txt')">
+              <button class="flex py-2 pr-7 px-3 hover:bg-hover w-full duration-200" @click="createNote('txt')">
                 <img src="./assets/material_symbols/notes.svg">
                 <div class="flex flex-col justify-center text-white ml-1.5">
                   Plaintext
                 </div>
               </button>
-              <button class="flex py-2 pr-7 px-3 hover:bg-[#353535] w-full duration-200" @click="createNote('scrap')">
+              <button class="flex py-2 pr-7 px-3 hover:bg-hover w-full duration-200" @click="createNote('scrap')">
                 <img src="./assets/material_symbols/contract.svg">
                 <div class="flex flex-col justify-center text-white ml-1.5">
                   Scrap
                 </div>
               </button>
-              <button class="flex py-2 pr-7 px-3 hover:bg-[#353535] w-full duration-200" @click="createNote('todo')">
+              <button class="flex py-2 pr-7 px-3 hover:bg-hover w-full duration-200" @click="createNote('todo')">
                 <img src="./assets/material_symbols/check_box.svg">
                 <div class="flex flex-col justify-center text-white ml-1.5">
                   Todo
@@ -137,14 +157,14 @@
           :info="i.info.replace('\n', ' ')"
           v-for="i in files"
           @click="openFile(i.name)"
-          :class="{'bg-[#353535]': currentFile === i.name}"
+          :class="{'bg-hover': currentFile === i.name}"
         />
       </div>
     </div>
 
     <!-- Main Pane -->
-    <div class="bg-[#1f1f1f] flex-grow">
-      <div class="bg-[#202020] h-[52px] w-full border-b border-[#424242] flex flex-col justify-center select-none">
+    <div class="bg-main-pane flex-grow">
+      <div class="bg-header h-[52px] w-full border-b border-border flex flex-col justify-center select-none">
         <div class="mx-4">
           <button class="float-left hover-light" @click="hideSidebar = !hideSidebar">
             <img src="./assets/material_symbols/dock_to_right.svg" alt="Note menu" class="opacity-80">
@@ -158,9 +178,9 @@
             <div class="absolute w-screen h-screen left-0 top-0 bg-black opacity-40 z-20" v-if="this.openNoteMenu" @click="this.openNoteMenu = false"></div>
           </Transition>
           <Transition name="slide-up">
-            <div class="absolute py-1.5 right-3.5 bg-[#262626] z-50 w-48 rounded-lg top-10 shadow-md border border-[#5f5f5f]" v-if="this.openNoteMenu">
+            <div class="absolute py-1.5 right-3.5 bg-sidebar1 z-50 w-48 rounded-lg top-10 shadow-md border border-border" v-if="this.openNoteMenu">
               <div>
-                <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200">
+                <button class="flex py-2 px-3 hover:bg-hover w-full duration-200">
                   <img src="./assets/material_symbols/keep.svg">
                   <div class="flex flex-col justify-center text-white ml-1.5 text-left">
                     ノートをピン留め
@@ -168,7 +188,7 @@
                 </button>
               </div>
               <div>
-                <button class="flex py-2 px-3 hover:bg-[#353535] w-full duration-200" @click="deleteNote()">
+                <button class="flex py-2 px-3 hover:bg-hover w-full duration-200" @click="deleteNote()">
                   <img src="./assets/material_symbols/delete_red.svg">
                   <div class="flex flex-col justify-center text-white ml-1.5 text-left">
                     {{ i18n.delete_note }}
@@ -195,6 +215,9 @@
     </div>
 
   </div>
+
+  <inPreferences :openPreferences="openPreferences" @close="this.getPreferences(); openPreferences = false" @getPreferences="this.getPreferences();" />
+  </div>
 </template>
 
 <script>
@@ -202,13 +225,15 @@ import inTurorialBalloon from './components/inTutorialBalloon.vue';
 import inFolder from './components/inFolder.vue'
 import inNote from './components/inNote.vue'
 import inEditor from './components/inEditor.vue'
+import inPreferences from './components/inPreferences.vue'
 
 export default {
   components: {
     inTurorialBalloon,
     inFolder,
     inNote,
-    inEditor
+    inEditor,
+    inPreferences
   },
   data: () => {
     return {
@@ -219,6 +244,8 @@ export default {
       openSwitchNotebookMenu: false,
       openCreateNoteMenu: false,
       openNoteMenu: false,
+      openMenu: false,
+      openPreferences: false,
 
       // Paths
       currentNotebook: "",
@@ -233,10 +260,14 @@ export default {
       // Data
       currentFileData: "",
       MdPreview: false,
-      hideSidebar: false
+      hideSidebar: false,
+      preferences: {}
     }
   },
   mounted(){
+    // Get Preferences
+    this.getPreferences()
+    
     // Get locales
     window.api.getLocales()
       .then(result => {
@@ -388,6 +419,14 @@ export default {
         }).catch((error) => {
           console.log(error)
         })
+    },
+    getPreferences(){
+      window.api.getPreferences()
+      .then(result => {
+        this.preferences = result
+      }).catch(error => {
+        console.error(error)
+      })
     }
 }}
 </script>
@@ -399,7 +438,7 @@ export default {
 
 @layer components {
   .hover-light {
-    @apply before:opacity-0 before:hover:opacity-100 before:absolute before:content-[''] before:bg-[#353535] before:p-4 before:rounded-full before:-ml-4 before:-mt-1 before:duration-200
+    @apply before:opacity-0 before:hover:opacity-100 before:absolute before:content-[''] before:bg-hover before:p-4 before:rounded-full before:-ml-4 before:-mt-1 before:duration-200
   }
 }
 
@@ -411,7 +450,7 @@ export default {
    background-color: transparent;
 }
 ::-webkit-scrollbar-thumb{
-   background-color: #515151;
+   background-color: var(--color-scrollbar);
 }
 
 /* Transition */
@@ -440,6 +479,71 @@ export default {
 }
 
 a {
-  color: #84a4f0;
+  color: var(--color-link);
+}
+
+/* Theme */
+:root {
+  --color-primary: #3250b9;
+  --color-red: #b93232;
+  --color-border: #424242;
+  --color-header: #212121;
+  --color-sidebar1: #262626;
+  --color-sidebar2: #2e2e2e;
+  --color-main-pane: #1f1f1f;
+  --color-hover: #353535;
+  --color-hover2: #2d2d2d;
+  --color-white: #ffffff;
+
+  --color-link: #84a4f0;
+  --color-scrollbar: #515151;
+}
+
+.theme-dracula {
+  --color-primary: #6272A4;
+  --color-red: #FF5555;
+  --color-border: #44475A;
+  --color-header: #282A36;
+  --color-sidebar1: #282A36;
+  --color-sidebar2: #282A36;
+  --color-main-pane: #282A36;
+  --color-hover: #44475A;
+  --color-hover2: #44475A;
+  --color-white: #F8F8F2;
+
+  --color-link: #84a4f0;
+  --color-scrollbar: #515151;
+}
+
+.theme-monokai-classic {
+  --color-primary: #cec469;
+  --color-red: #cec469;
+  --color-border: #161613;
+  --color-header: #161613;
+  --color-sidebar1: #161613;
+  --color-sidebar2: #1d1e19;
+  --color-main-pane: #272822;
+  --color-hover: #32332c;
+  --color-hover2: #32332c;
+  --color-white: #fdffe4;
+
+  --color-link: #66d9ef;
+  --color-scrollbar: #474841;
+}
+
+.theme-solarized-dark {
+  --color-primary: #007acc;
+  --color-red: #cb4b16;
+  --color-border: #00212b;
+  --color-header: #0e2931;
+  --color-sidebar1: #003847;
+  --color-sidebar2: #00212b;
+  --color-main-pane: #002b36;
+  --color-hover: #003440;
+  --color-hover2: #003440;
+  --color-white: #cdcdc3;
+
+  --color-link: #268bb7;
+  --color-scrollbar: #304a50;
 }
 </style>
