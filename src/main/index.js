@@ -16,12 +16,27 @@ if (!fs.existsSync(path.join(userDataPath, "folders.json"))) {
   fs.writeFileSync(path.join(userDataPath, "folders.json"), "{}");
 }
 
+if (!fs.existsSync(path.join(userDataPath, "preferences.json"))) {
+  fs.writeFileSync(path.join(userDataPath, "preferences.json"), "{}");
+}
+
 // Create the notebooks folder if it doesn't exist
 if (!fs.existsSync(path.join(userDataPath, "notebooks/"))) {
   fs.mkdirSync(path.join(userDataPath, "notebooks/"));
 }
 
 let folders = JSON.parse(fs.readFileSync(path.join(userDataPath, "folders.json"), {encoding: "utf-8",}));
+let preferences = JSON.parse(fs.readFileSync(path.join(userDataPath, "preferences.json"), {encoding: "utf-8",}));
+
+function savePreferences(){
+  fs.writeFileSync(
+    path.join(userDataPath, "preferences.json"),
+    JSON.stringify(preferences),
+    {
+      encoding: "utf-8",
+    },
+  );
+}
 
 function createWindow() {
   // Create the browser window.
@@ -309,6 +324,15 @@ app.whenReady().then(() => {
 
   ipcMain.handle("deleteNote", (event, path) => {
     return fs.rmSync(path);
+  });
+
+  ipcMain.handle("getPreferences", (event) => {
+    return preferences;
+  });
+
+  ipcMain.handle("setPreferences", (event, data) => {
+    preferences = JSON.parse(data);
+    savePreferences();
   });
 
   createWindow()

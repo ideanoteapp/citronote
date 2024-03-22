@@ -1,6 +1,6 @@
 <template>
   <div class="h-[calc(100%-50px)] flex flex-col">
-    <div class="min-w-0 w-full bg-[#353535] h-6 rounded-full mb-3 border border-[#424242]" v-if="list.length !== 0">
+    <div class="min-w-0 w-full bg-hover h-6 rounded-full mb-3 border border-border" v-if="list.length !== 0">
       <div class="h-full bg-green-500 rounded-full text-right pr-3 font-bold duration-200" :style="`width: ${progress}%`">{{ progress }}%<span v-if="progress === 100">🎉</span></div>
     </div>
 
@@ -27,7 +27,7 @@
     </div>
     <form
       @submit.prevent="addText"
-      class="flex items-end bg-[#262626] mt-4 rounded-lg border border-[#3a3a3a]"
+      class="flex items-end bg-sidebar1 mt-4 rounded-lg border border-border"
     >
       <input
         v-model="input"
@@ -37,7 +37,7 @@
       />
       <button
         type="submit"
-        class="rounded-lg w-10 h-10 flex justify-center flex-col text-center bg-[#2F497D]"
+        class="rounded-lg w-10 h-10 flex justify-center flex-col text-center bg-primary"
       >
         <div class="flex justify-center w-full flex-row">
           <img src="../assets/material_symbols/add.svg">

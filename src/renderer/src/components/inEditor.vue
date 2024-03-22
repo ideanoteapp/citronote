@@ -5,7 +5,7 @@
       @change="changeNoteTitle"
       v-model="notetitle"
       style="outline: none !important; caret-color: white"
-      class="bg-transparent pb-1 text-2xl flex-grow w-full focus:bg-[#303030] focus:mb-1.5 focus:text-[1.4rem] focus:rounded-xl focus:py-2 focus:pl-4 focus:pr-[-1rem]"
+      class="bg-transparent pb-1 text-2xl flex-grow w-full focus:bg-hover focus:mb-1.5 focus:text-[1.4rem] focus:rounded-xl focus:py-2 focus:pl-4 focus:pr-[-1rem]"
       placeholder="Note Name"
     />
   </div>
@@ -160,8 +160,8 @@ export default {
 }
 
 div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
-  background-color: #1f1f1f;
-  color: white;
+  background-color: var(--color-main-pane);
+  color: var(--color-white);
   border: none;
   padding: 0px;
 }
