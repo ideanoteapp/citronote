@@ -102,9 +102,7 @@ export default {
         } else {
           this.list.push({
             text: this.input,
-            date: `${d.getFullYear()}/${
-              d.getMonth() + 1
-            }/${d.getDate()} ${d.getHours()}:${d.getMinutes()}`,
+            date: `${d.toLocaleDateString()} ${d.toLocaleTimeString()}`,
           });
           this.input = "";
           this.$emit("save", JSON.stringify(this.list));

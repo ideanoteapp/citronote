@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("api", {
+  getLocales: () => ipcRenderer.invoke("getLocales"),
   getCurrentNotebook: () => ipcRenderer.invoke("getCurrentNotebook"),
   setCurrentNotebook: (notebook) => ipcRenderer.invoke("setCurrentNotebook", notebook),
   addNotebook: () => ipcRenderer.invoke("addNotebook"),
