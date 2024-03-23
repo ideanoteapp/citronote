@@ -2,7 +2,8 @@
   <div class="flex flex-col h-[calc(100%-50px)]">
     <div class="flex-grow overflow-y-scroll" ref="list">
       <VueDraggable ref="el" v-model="list" handle="#handle" @end="save()">
-        <div class="bg-sidebar1 border border-border rounded-lg px-4 py-2 w-full justify-between mb-2.5 duration-200" :class="{'bg-[#26334b]': index == editing}" v-for="i, index in list" :key="i">
+        <div v-for="i, index in list">
+          <div class="bg-sidebar1 border border-border rounded-lg px-4 py-2 w-full justify-between mb-2.5 duration-200" :class="{'bg-border': index === editing}" :key="i">
           <div class="mt-0.5 float-right">
             <div class="flex">
               <button @click="startEdit(index)" class="opacity-70 hover:opacity-90 duration-200 w-5 h-5">
@@ -21,6 +22,7 @@
             </div>
             <div class="break-all whitespace-pre-line" v-html="parseURL(i.text)"></div>
           </div>
+        </div>
         </div>
       </VueDraggable>
     </div>
