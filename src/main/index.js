@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, dialog, Menu } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 const path = require("path");
@@ -94,14 +94,31 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
+  // i18n
+  const lang = app.getLocale()
+  if (fs.existsSync(`./locales/${lang}.json`)){
+    var i18n = JSON.parse(fs.readFileSync(`./locales/${lang}.json`, { encoding: "utf-8" }))
+  }else{
+    var i18n = JSON.parse(fs.readFileSync(`./locales/en-US.json`, { encoding: "utf-8" }))
+  }
+
+  // ContextMenu
+  const menu = Menu.buildFromTemplate([
+    {
+      label: i18n.contextmenu.cut,
+      role: 'cut',
+    }, {
+      label: i18n.contextmenu.copy,
+      role: 'copy',
+    }, {
+      label: i18n.contextmenu.paste,
+      role: 'paste',
+    }
+  ]);
+  
   // IPC
   ipcMain.handle("getLocales", (event) => {
-    const lang = app.getLocale()
-    if (fs.existsSync(`./locales/${lang}.json`)){
-      return JSON.parse(fs.readFileSync(`./locales/${lang}.json`, { encoding: "utf-8" }))
-    }else{
-      return JSON.parse(fs.readFileSync(`./locales/en-US.json`, { encoding: "utf-8" }))
-    }
+    return i18n
   });
 
   ipcMain.handle("listNotebooks", (event) => {
@@ -171,8 +188,6 @@ app.whenReady().then(() => {
       },
     );
   });
-
-  ipcMain
 
   ipcMain.handle("listFolders", (event, currentNotebook) => {
     // Check for path existence
@@ -333,6 +348,10 @@ app.whenReady().then(() => {
   ipcMain.handle("setPreferences", (event, data) => {
     preferences = JSON.parse(data);
     savePreferences();
+  });
+
+  ipcMain.handle("rightClick", (event) => {
+    menu.popup()
   });
 
   createWindow()

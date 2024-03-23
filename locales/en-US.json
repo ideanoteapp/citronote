@@ -3,5 +3,11 @@
   "send_feedback": "Send Feedback",
   "delete_note": "Delete Note",
   "add_notebook": "Add Notebook",
-  "delete_notebook": "Remove Notebook"
+  "delete_notebook": "Remove Notebook",
+
+  "contextmenu": {
+    "cut": "Cut",
+    "copy": "Copy",
+    "paste": "Paste"
+  }
 }

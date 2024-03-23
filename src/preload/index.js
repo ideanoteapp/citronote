@@ -15,5 +15,6 @@ contextBridge.exposeInMainWorld("api", {
   changeNoteTitle: (from, to) => ipcRenderer.invoke("changeNoteTitle", from, to),
   deleteNote: (path) => ipcRenderer.invoke("deleteNote", path),
   getPreferences: (path) => ipcRenderer.invoke("getPreferences", path),
-  setPreferences: (path, data) => ipcRenderer.invoke("setPreferences", path, data)
+  setPreferences: (path, data) => ipcRenderer.invoke("setPreferences", path, data),
+  rightClick: () => ipcRenderer.invoke("rightClick")
 });
