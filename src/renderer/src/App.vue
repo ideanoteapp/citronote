@@ -1,5 +1,5 @@
 <template>
-  <div :class="{'theme-dracula': preferences.theme === 'dracula', 'theme-monokai-classic': preferences.theme === 'monokai-classic', 'theme-solarized-dark': preferences.theme === 'solarized-dark'}">
+  <div :class="{'theme-dracula': preferences.theme === 'dracula', 'theme-blueprint': preferences.theme === 'blueprint'}">
   <div class="flex h-screen">
 
     <!-- Sidebar 1 -->
@@ -551,5 +551,21 @@ a {
 
   --color-link: #268bb7;
   --color-scrollbar: #304a50;
+}
+
+.theme-blueprint {
+  --color-primary: #ffb608;
+  --color-red: #ffb608;
+  --color-border: #505b73;
+  --color-header: #1a2234;
+  --color-sidebar1: #293449;
+  --color-sidebar2: #2e3a50;
+  --color-main-pane: #364259;
+  --color-hover: #434e62;
+  --color-hover2: #434e62;
+  --color-white: #ffffff;
+
+  --color-link: #ffb608;
+  --color-scrollbar: #c8c9cc;
 }
 </style>
