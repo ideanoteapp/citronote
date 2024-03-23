@@ -105,11 +105,11 @@
     <div class="bg-sidebar2 border-r border-border min-w-[286px] w-[286px] select-none" v-if="!hideSidebar">
       <div class="bg-header h-[52px] w-full border-b border-border flex flex-col justify-center">
         <div class="flex justify-end mx-3">
-          <button class="mx-1.5 hover-light">
-            <img src="./assets/material_symbols/contract_white.svg" alt="Markdown" class="opacity-80">
+          <button class="mx-1.5 hover-light" @click="createNote('scrap')">
+            <img src="./assets/material_symbols/contract_white.svg" alt="Scrap" class="opacity-80">
           </button>
 
-          <button class="mx-1.5 hover-light">
+          <button class="mx-1.5 hover-light" @click="createNote('md')">
             <img src="./assets/material_symbols/markdown_white.svg" alt="Markdown" class="opacity-80">
           </button>
 
