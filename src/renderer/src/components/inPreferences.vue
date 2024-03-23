@@ -64,6 +64,8 @@ export default{
     window.api.getPreferences()
       .then(result => {
         this.preferences = result
+
+        this.theme = result.theme
       }).catch(error => {
         console.error(error)
       })
