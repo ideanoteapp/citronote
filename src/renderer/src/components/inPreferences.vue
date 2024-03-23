@@ -33,8 +33,7 @@
                 >
                   <option value="dark">Dark</option>
                   <option value="dracula">Dracula</option>
-                  <option value="monokai-classic">Monokai Classic</option>
-                  <option value="solarized-dark">Solarized Dark</option>
+                  <option value="blueprint">Blueprint</option>
                 </select>
               </div>
             </div>
