@@ -4,5 +4,11 @@
   "delete_note": "ノートを削除",
   "add_notebook": "ノートブックを追加",
   "delete_notebook": "ノートブックを削除",
-  "preferences": "設定"
+  "preferences": "設定",
+
+  "contextmenu": {
+    "cut": "切り取り",
+    "copy": "コピー",
+    "paste": "貼り付け"
+  }
 }

@@ -290,6 +290,12 @@ export default {
       .then(result => {
         this.notebooks = result;
       })
+    
+    // Set ContextMenu
+    window.addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+      window.api.rightClick()
+    }, false);
   },
   methods: {
     switchNotebook(i){
@@ -512,7 +518,7 @@ a {
   --color-white: #F8F8F2;
 
   --color-link: #84a4f0;
-  --color-scrollbar: #515151;
+  --color-scrollbar: #44475A;
 }
 
 .theme-monokai-classic {
