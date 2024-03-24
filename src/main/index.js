@@ -315,7 +315,9 @@ app.whenReady().then(() => {
       path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'jpeg' ||
       path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'webp' ||
       path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'gif' ||
-      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'mp4'
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'mp4' ||
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'mp3' ||
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'wav'
     ){
       return fs.readFileSync(path, 'base64')
     }else{
@@ -389,20 +391,9 @@ app.whenReady().then(() => {
           properties: ["openFile"],
           filters: [
             {
-              name: "Markdown, Plaintext, Scrap, ToDo, Images, Musics",
+              name: "",
               extensions: [
-                "md",
-                "txt",
-                "scrap",
-                "todo",
-                "png",
-                "jpeg",
-                "jpg",
-                "webp",
-                "gif",
-                "mp3",
-                "wav",
-                "mp4"
+                "*"
               ],
             },
           ],

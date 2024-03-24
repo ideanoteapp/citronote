@@ -30,6 +30,9 @@
 
   <video controls v-else-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'mp4'"
   :src="`data:video/${path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0]};base64,${textarea}`" class="w-full"></video>
+
+  <audio controls v-else-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'mp3' || path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'wav'"
+  :src="`data:audio/${path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0]};base64,${textarea}`" class="w-full"></audio>
 </template>
 
 <script>
