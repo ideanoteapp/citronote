@@ -411,6 +411,10 @@ app.whenReady().then(() => {
       console.error(error);
     }
   });
+  
+  ipcMain.handle("openInExternal", (event, path) => {
+    shell.openPath(path)
+  });
 
   createWindow()
 

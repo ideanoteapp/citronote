@@ -33,6 +33,13 @@
 
   <audio controls v-else-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'mp3' || path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'wav'"
   :src="`data:audio/${path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0]};base64,${textarea}`" class="w-full"></audio>
+
+  <div class="bg-sidebar2 border border-border rounded-xl text-center py-4" v-else>
+    <div>ideaNoteで開けないファイルです</div>
+    <button class="bg-primary rounded-lg px-4 py-1.5 mt-2" @click="openInExternal">
+      外部アプリで開く
+    </button>
+  </div>
 </template>
 
 <script>
@@ -117,6 +124,12 @@ export default {
     changeNoteTitle() {
       this.$emit("changeNoteTitle", this.notetitle);
     },
+    openInExternal(){
+      window.api.openInExternal(this.path)
+        .catch(error => {
+          console.error(error)
+        })
+    }
   },
   mounted(){
     this.textarea = this.text
