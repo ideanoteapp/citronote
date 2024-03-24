@@ -3,10 +3,16 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 const path = require("path");
 const fs = require("fs");
+import { version } from '/package.json';
 
 const userDataPath = app.getPath("userData");
 
-const configPath = path.join(userDataPath, "currentnotebook.txt");
+// Read&Set version.txt
+let ifUpdated = false
+if(fs.readFileSync(path.join(userDataPath, "version.txt"), "utf-8") !== version){
+  ifUpdated = true;
+  fs.writeFileSync(path.join(userDataPath, "version.txt"), version)
+}
 
 if (!fs.existsSync(path.join(userDataPath, "currentnotebook.txt"))) {
   fs.writeFileSync(path.join(userDataPath, "currentnotebook.txt"), "");
@@ -119,6 +125,10 @@ app.whenReady().then(() => {
   // IPC
   ipcMain.handle("getLocales", (event) => {
     return i18n
+  });
+
+  ipcMain.handle("getIfUpdated", (event) => {
+    return ifUpdated
   });
 
   ipcMain.handle("listNotebooks", (event) => {
