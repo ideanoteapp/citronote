@@ -145,6 +145,12 @@
                   Todo
                 </div>
               </button>
+              <button class="flex py-2 pr-7 px-3 hover:bg-hover w-full duration-200" @click="upload()">
+                <img src="./assets/material_symbols/upload.svg">
+                <div class="flex flex-col justify-center text-white ml-1.5">
+                  アップロード
+                </div>
+              </button>
             </div>
           </Transition>
         </div>
@@ -433,6 +439,15 @@ export default {
       }).catch(error => {
         console.error(error)
       })
+    },
+    upload(){
+      window.api.upload(this.currentFolder)
+        .then(result => {
+          this.getFiles();
+          this.openCreateNoteMenu = false;
+        }).catch(error => {
+          console.error(error)
+        })
     }
 }}
 </script>

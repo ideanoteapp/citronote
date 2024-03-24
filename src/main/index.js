@@ -364,6 +364,41 @@ app.whenReady().then(() => {
     menu.popup()
   });
 
+  ipcMain.handle("upload", async (event, currentFolder) => {
+    try {
+      const filePath = await dialog.showOpenDialog({
+        properties: ["openFile"],
+        filters: [
+          {
+            name: "Markdown, Plaintext, Scrap, ToDo, Images, Musics",
+            extensions: [
+              "md",
+              "txt",
+              "scrap",
+              "todo",
+              "png",
+              "jpeg",
+              "jpg",
+              "webp",
+              "mp3",
+              "wav",
+            ],
+          },
+        ],
+      });
+      if (!filePath.canceled) {
+        const sourcePath = filePath.filePaths[0];
+        const targetPath = path.join(
+          currentFolder,
+          sourcePath.replace(/^.*[\\/]/, ""),
+        );
+        fs.copyFileSync(sourcePath, targetPath);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
   createWindow()
 
   app.on('activate', function () {
