@@ -10,7 +10,7 @@
       <div class="text-white ml-2.5 text-[1.035rem] text-left" v-if="name.startsWith('$untitled-')">
         New Note...
       </div>
-      <div class="text-white ml-2.5 text-[1.035rem] text-left" v-else>
+      <div class="text-white ml-2.5 text-[1.035rem] text-left break-all" v-else>
         {{ name }}
       </div>
     </div>

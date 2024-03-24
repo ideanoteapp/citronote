@@ -102,7 +102,7 @@
     </div>
 
     <!-- Sidebar 2 -->
-    <div class="bg-sidebar2 border-r border-border min-w-[286px] w-[286px] select-none" v-if="!hideSidebar">
+    <div class="bg-sidebar2 border-r border-border min-w-[286px] w-[286px] select-none" v-if="!hideSidebar" ref="sidebar2">
       <div class="bg-header h-[52px] w-full border-b border-border flex flex-col justify-center">
         <div class="flex justify-end mx-3">
           <button class="mx-1.5 hover-light" @click="createNote('scrap')">
@@ -302,6 +302,27 @@ export default {
       e.preventDefault();
       window.api.rightClick()
     }, false);
+
+    // Drag and drop
+    this.$refs.sidebar2.addEventListener('drop', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+ 
+      for (const f of event.dataTransfer.files) {
+        window.api.upload(this.currentFolder, f.path)
+          .then(result => {
+            this.getFiles();
+            this.openCreateNoteMenu = false;
+          }).catch(error => {
+            console.error(error)
+          })
+      }
+    });
+ 
+    this.$refs.sidebar2.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
   },
   methods: {
     switchNotebook(i){
