@@ -18,5 +18,6 @@ contextBridge.exposeInMainWorld("api", {
   setPreferences: (path, data) => ipcRenderer.invoke("setPreferences", path, data),
   rightClick: () => ipcRenderer.invoke("rightClick"),
   getIfUpdated: () => ipcRenderer.invoke("getIfUpdated"),
-  upload: (currentFolder, file) => ipcRenderer.invoke("upload", currentFolder, file)
+  upload: (currentFolder, file) => ipcRenderer.invoke("upload", currentFolder, file),
+  openInExternal: (path) => ipcRenderer.invoke("openInExternal", path)
 });
