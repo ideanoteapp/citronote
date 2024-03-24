@@ -309,7 +309,20 @@ app.whenReady().then(() => {
       return
     }
 
-    return fs.readFileSync(path, { encoding: "utf8" })
+    if(
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'png' ||
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'jpg' ||
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'jpeg' ||
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'webp' ||
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'gif' ||
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'mp4' ||
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'mp3' ||
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'wav'
+    ){
+      return fs.readFileSync(path, 'base64')
+    }else{
+      return fs.readFileSync(path, { encoding: "utf8" })
+    }
   });
 
   ipcMain.handle("saveFile", (event, path, text) => {
@@ -378,18 +391,9 @@ app.whenReady().then(() => {
           properties: ["openFile"],
           filters: [
             {
-              name: "Markdown, Plaintext, Scrap, ToDo, Images, Musics",
+              name: "",
               extensions: [
-                "md",
-                "txt",
-                "scrap",
-                "todo",
-                "png",
-                "jpeg",
-                "jpg",
-                "webp",
-                "mp3",
-                "wav",
+                "*"
               ],
             },
           ],
