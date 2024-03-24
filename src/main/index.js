@@ -309,7 +309,17 @@ app.whenReady().then(() => {
       return
     }
 
-    return fs.readFileSync(path, { encoding: "utf8" })
+    if(
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'png' ||
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'jpg' ||
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'jpeg' ||
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'webp' ||
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'gif'
+    ){
+      return fs.readFileSync(path, 'base64')
+    }else{
+      return fs.readFileSync(path, { encoding: "utf8" })
+    }
   });
 
   ipcMain.handle("saveFile", (event, path, text) => {
@@ -388,6 +398,7 @@ app.whenReady().then(() => {
                 "jpeg",
                 "jpg",
                 "webp",
+                "gif",
                 "mp3",
                 "wav",
               ],
