@@ -10,23 +10,26 @@
     />
   </div>
 
-  <textarea id="markdown-editor" v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'md'" v-show="!previewMd" placeholder="Type here..."  v-focus></textarea>
-
   <div id="md-preview" v-html="parsedMd" v-show="isPreviewMd" class="mdcontent whitespace-pre-line flex flex-col"></div>
 
-  <textarea class="w-full h-full bg-transparent" v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'txt'" style="outline: none !important; caret-color: white" @input="update(textarea)" v-model="textarea" placeholder="Type here..." v-focus></textarea>
+  <textarea id="markdown-editor" v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'md'" v-show="!previewMd" placeholder="Type here..."  v-focus></textarea>
+
+  <textarea class="w-full h-full bg-transparent" v-else-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'txt'" style="outline: none !important; caret-color: white" @input="update(textarea)" v-model="textarea" placeholder="Type here..." v-focus></textarea>
   
-  <inScrap v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'scrap'" :data="textarea" :key="textarea" @save="update" />
+  <inScrap v-else-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'scrap'" :data="textarea" :key="textarea" @save="update" />
 
-  <inTodo v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'todo'" :text="textarea" :key="textarea" @save="update" />
+  <inTodo v-else-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'todo'" :text="textarea" :key="textarea" @save="update" />
 
-  <img v-if="
+  <img v-else-if="
     path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'png' ||
     path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'jpg' ||
     path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'jpeg' ||
     path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'webp' ||
     path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'gif'"
   :src="`data:image/${path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0]};base64,${textarea}`" class="w-full">
+
+  <video controls v-else-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'mp4'"
+  :src="`data:video/${path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0]};base64,${textarea}`" class="w-full"></video>
 </template>
 
 <script>

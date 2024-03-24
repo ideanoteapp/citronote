@@ -314,7 +314,8 @@ app.whenReady().then(() => {
       path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'jpg' ||
       path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'jpeg' ||
       path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'webp' ||
-      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'gif'
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'gif' ||
+      path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'mp4'
     ){
       return fs.readFileSync(path, 'base64')
     }else{
@@ -401,6 +402,7 @@ app.whenReady().then(() => {
                 "gif",
                 "mp3",
                 "wav",
+                "mp4"
               ],
             },
           ],
