@@ -436,6 +436,10 @@ app.whenReady().then(() => {
     shell.openPath(path)
   });
 
+  ipcMain.handle("newFolder", (event, path) => {
+    return fs.mkdirSync(path)
+  });
+
   createWindow()
 
   app.on('activate', function () {

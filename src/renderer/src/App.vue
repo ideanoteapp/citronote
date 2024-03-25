@@ -89,6 +89,23 @@
         <div class="px-3 my-3 overflow-y-scroll flex-grow max-h-[calc(100vh-64px)]">
           <inFolder type="root" :name="i18n.root" :is_current_folder="currentFolder === currentNotebook" @click="switchFolder(currentNotebook)" />
           <inFolder v-for="i in folders" type="folder" :name="i.replace(/^.*[\\/]/, '')" @click="switchFolder(i)" :is_current_folder="currentFolder === i" />
+          <button class="flex mb-2 px-2.5 pt-1 w-full rounded-xl opacity-90 hover:opacity-100 duration-200" @click="openCreateFolderForm = true;">
+            <img src="./assets/material_symbols/add.svg" class="opacity-80 w-5 h-5">
+            <div class="text-[#ffffffdd] ml-1.5 text-left break-all text-sm">
+              {{ i18n.new_folder }}
+            </div>
+          </button>
+
+          <Transition name="fade">
+            <div class="absolute w-screen h-screen left-0 top-0 bg-black opacity-40 z-20" v-if="this.openCreateFolderForm" @click="this.openCreateFolderForm = false"></div>
+          </Transition>
+          <Transition name="slide-up">
+            <div class="absolute bg-sidebar1 z-50 w-[13rem] rounded-lg shadow-md border border-border px-4 py-3" v-if="this.openCreateFolderForm">
+              <div class="text-white text-sm">フォルダの名前</div>
+              <input type="text" class="w-full rounded-lg mt-1 px-3 py-1.5 bg-header border border-border text-white" v-model="createFolderName">
+              <button class="py-1.5 px-3 bg-primary rounded-lg text-white mt-2 w-full text-center" @click="newFolder">作成</button>
+            </div>
+          </Transition>
         </div>
         <a href="https://wv5swdgqa69.typeform.com/to/ec8tXVs7">
           <div class="border-t border-t-border flex py-2.5 px-2.5 hover:bg-hover2 duration-200">
@@ -265,6 +282,7 @@ export default {
       openNoteMenu: false,
       openMenu: false,
       openPreferences: false,
+      openCreateFolderForm: false,
 
       // Paths
       currentNotebook: "",
@@ -280,7 +298,10 @@ export default {
       currentFileData: "",
       MdPreview: false,
       hideSidebar: false,
-      preferences: {}
+      preferences: {},
+
+      // Form Data
+      createFolderName: ""
     }
   },
   mounted(){
@@ -486,6 +507,15 @@ export default {
     copyEmbedCode(){
       navigator.clipboard.writeText(`![](${"media:///" + this.currentFile.replace(/ /g, "%20").replace(/\\/g, "/")})`);
       this.openNoteMenu = false;
+    },
+    newFolder(){
+      this.openCreateFolderForm = false;
+      window.api.newFolder(this.currentNotebook + "/" + this.createFolderName)
+        .then(result => {
+          this.getFolders()
+        }).catch(error => {
+          console.error(error)
+        })
     }
 }}
 </script>
