@@ -11,7 +11,9 @@
 
   "note_menu": {
     "delete_note": "Delete Note",
-    "copy_embed_code": "Copy embed code"
+    "copy_embed_code": "Copy embed code",
+    "pin": "Pin note",
+    "unpin": "Unpin note"
   },
 
   "contextmenu": {

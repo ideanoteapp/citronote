@@ -130,6 +130,15 @@ export default {
         .catch(error => {
           console.error(error)
         })
+    },
+    pin(){
+      this.notetitle = this.notetitle + " #pin";
+      this.changeNoteTitle();
+    },
+    unpin() {
+      this.notetitle = this.notetitle.replace(" #pin", "");
+      this.notetitle = this.notetitle.replace("#pin", "");
+      this.changeNoteTitle();
     }
   },
   mounted(){
@@ -172,8 +181,6 @@ export default {
         this.textarea = this.easyMDE.value();
       });
     }
-
-    
   }
 }
 </script>
