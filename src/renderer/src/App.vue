@@ -89,7 +89,7 @@
         <div class="px-3 my-3 overflow-y-scroll flex-grow max-h-[calc(100vh-64px)]">
           <inFolder type="root" :name="i18n.root" :is_current_folder="currentFolder === currentNotebook" @click="switchFolder(currentNotebook)" />
           <inFolder v-for="i in folders" type="folder" :name="i.replace(/^.*[\\/]/, '')" @click="switchFolder(i)" :is_current_folder="currentFolder === i" />
-          <button class="flex mb-2 px-2.5 pt-1 w-full rounded-xl opacity-90 hover:opacity-100 duration-200" @click="openCreateFolderForm = true;">
+          <button class="flex mb-2 px-2.5 pt-1 w-full rounded-xl opacity-90 hover:opacity-100 duration-200" @click="openCreateFolderForm = true; this.createFolderName = '';">
             <img src="./assets/material_symbols/add.svg" class="opacity-80 w-5 h-5">
             <div class="text-[#ffffffdd] ml-1.5 text-left break-all text-sm">
               {{ i18n.new_folder }}
