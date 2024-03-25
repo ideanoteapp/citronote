@@ -202,7 +202,7 @@
                     currentFile.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'gif'">
                   <img src="./assets/material_symbols/code.svg">
                   <div class="flex flex-col justify-center text-white ml-1.5 text-left">
-                    埋め込みコードをコピー
+                    {{ i18n.note_menu.copy_embed_code }}
                   </div>
                 </button>
               </div>
@@ -210,7 +210,7 @@
                 <button class="flex py-2 px-3 hover:bg-hover w-full duration-200" @click="deleteNote()">
                   <img src="./assets/material_symbols/delete_red.svg">
                   <div class="flex flex-col justify-center text-white ml-1.5 text-left">
-                    {{ i18n.delete_note }}
+                    {{ i18n.note_menu.delete_note }}
                   </div>
                 </button>
               </div>

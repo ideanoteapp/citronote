@@ -1,9 +1,13 @@
 {
   "root": "Root",
   "send_feedback": "Send Feedback",
-  "delete_note": "Delete Note",
   "add_notebook": "Add Notebook",
   "delete_notebook": "Remove Notebook",
+
+  "note_menu": {
+    "delete_note": "Delete Note",
+    "copy_embed_code": "Copy Embed Code"
+  }
 
   "contextmenu": {
     "cut": "Cut",
