@@ -206,6 +206,10 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
   font-size: calc(1.3rem + 0.6vw) !important;
 }
 
+.cm-string{
+  word-break: break-all;
+}
+
 .cm-strong:not(.cm-formatting) {
   text-decoration: underline; /* 下線 */
   text-decoration-thickness: 0.5em; /* 線の太さ */

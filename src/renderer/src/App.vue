@@ -184,12 +184,25 @@
             <div class="absolute w-screen h-screen left-0 top-0 bg-black opacity-40 z-20" v-if="this.openNoteMenu" @click="this.openNoteMenu = false"></div>
           </Transition>
           <Transition name="slide-up">
-            <div class="absolute py-1.5 right-3.5 bg-sidebar1 z-50 w-48 rounded-lg top-10 shadow-md border border-border" v-if="this.openNoteMenu">
+            <div class="absolute py-1.5 right-3.5 bg-sidebar1 z-50 min-w-48 rounded-lg top-10 shadow-md border border-border" v-if="this.openNoteMenu">
               <div>
                 <button class="flex py-2 px-3 hover:bg-hover w-full duration-200">
                   <img src="./assets/material_symbols/keep.svg">
                   <div class="flex flex-col justify-center text-white ml-1.5 text-left">
                     ノートをピン留め
+                  </div>
+                </button>
+              </div>
+              <div>
+                <button class="flex py-2 px-3 hover:bg-hover w-full duration-200" @click="copyEmbedCode()" v-if="
+                    currentFile.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'png' ||
+                    currentFile.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'jpg' ||
+                    currentFile.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'jpeg' ||
+                    currentFile.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'webp' ||
+                    currentFile.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'gif'">
+                  <img src="./assets/material_symbols/code.svg">
+                  <div class="flex flex-col justify-center text-white ml-1.5 text-left">
+                    埋め込みコードをコピー
                   </div>
                 </button>
               </div>
@@ -469,6 +482,10 @@ export default {
         }).catch(error => {
           console.error(error)
         })
+    },
+    copyEmbedCode(){
+      navigator.clipboard.writeText(`![](${"media:///" + this.currentFile.replace(/ /g, "%20").replace(/\\/g, "/")})`);
+      this.openNoteMenu = false;
     }
 }}
 </script>
