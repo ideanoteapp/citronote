@@ -440,6 +440,10 @@ app.whenReady().then(() => {
     return fs.mkdirSync(path)
   });
 
+  ipcMain.handle("deleteFolder", (event, path) => {
+    return fs.rmSync(path, {recursive: true})
+  });
+
   createWindow()
 
   app.on('activate', function () {

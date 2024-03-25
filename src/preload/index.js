@@ -20,5 +20,6 @@ contextBridge.exposeInMainWorld("api", {
   getIfUpdated: () => ipcRenderer.invoke("getIfUpdated"),
   upload: (currentFolder, file) => ipcRenderer.invoke("upload", currentFolder, file),
   openInExternal: (path) => ipcRenderer.invoke("openInExternal", path),
-  newFolder: (path) => ipcRenderer.invoke("newFolder", path)
+  newFolder: (path) => ipcRenderer.invoke("newFolder", path),
+  deleteFolder: (path) => ipcRenderer.invoke("deleteFolder", path)
 });
