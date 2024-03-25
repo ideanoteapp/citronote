@@ -4,6 +4,8 @@
   "add_notebook": "Add Notebook",
   "delete_notebook": "Remove Notebook",
 
+  "new_folder": "New Folder",
+
   "note_menu": {
     "delete_note": "Delete Note",
     "copy_embed_code": "Copy Embed Code"

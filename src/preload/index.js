@@ -19,5 +19,6 @@ contextBridge.exposeInMainWorld("api", {
   rightClick: () => ipcRenderer.invoke("rightClick"),
   getIfUpdated: () => ipcRenderer.invoke("getIfUpdated"),
   upload: (currentFolder, file) => ipcRenderer.invoke("upload", currentFolder, file),
-  openInExternal: (path) => ipcRenderer.invoke("openInExternal", path)
+  openInExternal: (path) => ipcRenderer.invoke("openInExternal", path),
+  newFolder: (path) => ipcRenderer.invoke("newFolder", path)
 });
