@@ -102,7 +102,7 @@
           <Transition name="slide-up">
             <div class="absolute bg-sidebar1 z-50 w-[13rem] rounded-lg shadow-md border border-border px-4 py-3" v-if="this.openCreateFolderForm">
               <div class="text-white text-sm">{{ i18n.create_folder.name }}</div>
-              <input type="text" class="w-full rounded-lg mt-1 px-3 py-1.5 bg-header border border-border text-white" v-model="createFolderName">
+              <input type="text" class="w-full rounded-lg mt-1 px-3 py-1.5 bg-header border border-border text-white" v-model="createFolderName" v-focus>
               <button class="py-1.5 px-3 bg-primary rounded-lg text-white mt-2 w-full text-center" @click="newFolder">{{ i18n.create_folder.create }}</button>
             </div>
           </Transition>
@@ -271,7 +271,14 @@ import inNote from './components/inNote.vue'
 import inEditor from './components/inEditor.vue'
 import inPreferences from './components/inPreferences.vue'
 
+const focus = {
+  mounted: (el) => el.focus()
+}
+
 export default {
+  directives: {
+    focus
+  },
   components: {
     inTurorialBalloon,
     inFolder,
