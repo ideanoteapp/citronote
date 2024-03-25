@@ -202,11 +202,19 @@
           </Transition>
           <Transition name="slide-up">
             <div class="absolute py-1.5 right-3.5 bg-sidebar1 z-50 min-w-48 rounded-lg top-10 shadow-md border border-border" v-if="this.openNoteMenu">
-              <div>
-                <button class="flex py-2 px-3 hover:bg-hover w-full duration-200">
+              <div v-if="currentFile.replace(/^.*[\\/]/, '').includes('#pin')">
+                <button class="flex py-2 px-3 hover:bg-hover w-full duration-200" @click="unpin()">
+                  <img src="./assets/material_symbols/keep_off.svg">
+                  <div class="flex flex-col justify-center text-white ml-1.5 text-left">
+                    {{ i18n.note_menu.unpin }}
+                  </div>
+                </button>
+              </div>
+              <div v-else>
+                <button class="flex py-2 px-3 hover:bg-hover w-full duration-200" @click="pin()">
                   <img src="./assets/material_symbols/keep.svg">
                   <div class="flex flex-col justify-center text-white ml-1.5 text-left">
-                    ノートをピン留め
+                    {{ i18n.note_menu.pin }}
                   </div>
                 </button>
               </div>
@@ -516,6 +524,14 @@ export default {
         }).catch(error => {
           console.error(error)
         })
+    },
+    pin(){
+      this.openNoteMenu = false;
+      this.$refs.editor.pin()
+    },
+    unpin(){
+      this.openNoteMenu = false;
+      this.$refs.editor.unpin()
     }
 }}
 </script>

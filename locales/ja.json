@@ -11,7 +11,9 @@
 
   "note_menu": {
     "delete_note": "ノートを削除",
-    "copy_embed_code": "埋め込みコードをコピー"
+    "copy_embed_code": "埋め込みコードをコピー",
+    "pin": "ノートをピン留め",
+    "unpin": "ピン留めを解除"
   },
 
   "contextmenu": {
