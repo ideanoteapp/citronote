@@ -9,7 +9,7 @@
           <div class="bg-sidebar2 w-[80vw] h-[80vh] border border-border rounded-xl px-5 py-4">
             <div class="flex justify-between">
               <div class="text-white text-2xl flex font-bold mb-2">
-                設定
+                {{ i18n.preferences.title }}
               </div>
               <button
                 class="w-9 h-9 text-left text-white bg-dark-red rounded-lg"
@@ -25,7 +25,7 @@
             <div class="flex">
               <!--<div class="w-[24%] bg-red-500 mr-3">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>-->
               <div class="flex-grow text-white">
-                <div class="mb-1">テーマ</div>
+                <div class="mb-1">{{ i18n.preferences.theme }}</div>
                 <select
                   v-model="theme"
                   @change='this.$emit("getPreferences");'

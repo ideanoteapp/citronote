@@ -22,7 +22,7 @@
                 <button class="flex py-2 px-3 hover:bg-hover w-full duration-200" @click="openPreferences = true; openMenu = false;">
                   <img src="./assets/material_symbols/settings.svg">
                   <div class="flex flex-col justify-center text-white ml-1.5 text-left">
-                    {{ i18n.preferences }}
+                    {{ i18n.preferences.title }}
                   </div>
                 </button>
               </div>
@@ -57,7 +57,7 @@
                 <button class="flex py-2 px-3 hover:bg-hover w-full duration-200" @click="removeNotebook()">
                   <img src="./assets/material_symbols/delete_red.svg" class="h-5">
                   <div class="text-sm flex flex-col justify-center text-white ml-1.5 text-left">
-                    {{ i18n.delete_notebook }}
+                    {{ i18n.notebook_menu.delete_notebook }}
                   </div>
                 </button>
               </div>
@@ -77,7 +77,7 @@
                 <button class="flex py-2 px-3 hover:bg-hover w-full duration-200" @click="addNotebook()">
                   <img src="./assets/material_symbols/add.svg">
                   <div class="flex flex-col justify-center text-white ml-1.5 text-left">
-                    {{ i18n.add_notebook }}
+                    {{ i18n.notebook_menu.add_notebook }}
                   </div>
                 </button>
               </div>
@@ -101,9 +101,9 @@
           </Transition>
           <Transition name="slide-up">
             <div class="absolute bg-sidebar1 z-50 w-[13rem] rounded-lg shadow-md border border-border px-4 py-3" v-if="this.openCreateFolderForm">
-              <div class="text-white text-sm">フォルダの名前</div>
+              <div class="text-white text-sm">{{ i18n.create_folder.name }}</div>
               <input type="text" class="w-full rounded-lg mt-1 px-3 py-1.5 bg-header border border-border text-white" v-model="createFolderName">
-              <button class="py-1.5 px-3 bg-primary rounded-lg text-white mt-2 w-full text-center" @click="newFolder">作成</button>
+              <button class="py-1.5 px-3 bg-primary rounded-lg text-white mt-2 w-full text-center" @click="newFolder">{{ i18n.create_folder.create }}</button>
             </div>
           </Transition>
         </div>
@@ -165,7 +165,7 @@
               <button class="flex py-2 pr-7 px-3 hover:bg-hover w-full duration-200" @click="upload()">
                 <img src="./assets/material_symbols/upload.svg">
                 <div class="flex flex-col justify-center text-white ml-1.5">
-                  アップロード
+                  Upload
                 </div>
               </button>
             </div>
@@ -245,7 +245,7 @@
       </div>
       <div class="flex justify-center h-[calc(100%-52px)] overflow-hidden">
         <div class="w-full max-w-[45rem] mx-[2rem] mt-6 h-[calc(100%-24px)] border-none focus:outline-0 text-white">
-          <inEditor v-if="currentFile" :path="currentFile" :text="currentFileData" :key="currentFile" @save="saveFile" @changeNoteTitle="changeNoteTitle" ref="editor" />
+          <inEditor v-if="currentFile" :path="currentFile" :text="currentFileData" :key="currentFile" @save="saveFile" @changeNoteTitle="changeNoteTitle" ref="editor" :i18n="i18n" />
         </div>
       </div>
     </div>

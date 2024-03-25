@@ -35,9 +35,9 @@
   :src="`data:audio/${path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0]};base64,${textarea}`" class="w-full"></audio>
 
   <div class="bg-sidebar2 border border-border rounded-xl text-center py-4" v-else>
-    <div>ideaNoteで開けないファイルです</div>
+    <div>{{ i18n.editor.cannot_open }}</div>
     <button class="bg-primary rounded-lg px-4 py-1.5 mt-2" @click="openInExternal">
-      外部アプリで開く
+      {{ i18n.editor.open_in_external }}
     </button>
   </div>
 </template>
@@ -60,7 +60,8 @@ export default {
   },
   props: [
       "path",
-      "text"
+      "text",
+      "i18n"
   ],
   components: {
     inScrap,

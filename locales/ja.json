@@ -3,10 +3,11 @@
   "send_feedback": "意見を送る",
   
   "new_folder": "新しいフォルダ",
-  
-  "add_notebook": "ノートブックを追加",
-  "delete_notebook": "ノートブックを削除",
-  "preferences": "設定",
+
+  "notebook_menu": {
+    "add_notebook": "ノートブックを追加",
+    "delete_notebook": "ノートブックを削除"
+  },
 
   "note_menu": {
     "delete_note": "ノートを削除",
@@ -17,5 +18,20 @@
     "cut": "切り取り",
     "copy": "コピー",
     "paste": "貼り付け"
+  },
+
+  "editor": {
+    "cannot_open": "ideaNoteで開けないファイルです",
+    "open_in_external": "外部アプリで開く"
+  },
+
+  "create_folder": {
+    "create": "作成",
+    "name": "フォルダの名前"
+  },
+
+  "preferences": {
+    "title": "設定",
+    "theme": "テーマ"
   }
 }
