@@ -1,4 +1,6 @@
 import { app, shell, BrowserWindow, ipcMain, dialog, Menu } from 'electron'
+const { protocol } = require('electron')
+const { net } = require('electron')
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 const path = require("path");
@@ -30,6 +32,18 @@ if (!fs.existsSync(path.join(userDataPath, "preferences.json"))) {
 if (!fs.existsSync(path.join(userDataPath, "notebooks/"))) {
   fs.mkdirSync(path.join(userDataPath, "notebooks/"));
 }
+
+// Register media protocol
+protocol.registerSchemesAsPrivileged([
+  {
+    scheme: 'media',
+    privileges: {
+      secure: true,
+      supportFetchAPI: true,
+      bypassCSP: true
+    }
+  }
+]);
 
 let folders = JSON.parse(fs.readFileSync(path.join(userDataPath, "folders.json"), {encoding: "utf-8",}));
 let preferences = JSON.parse(fs.readFileSync(path.join(userDataPath, "preferences.json"), {encoding: "utf-8",}));
@@ -99,6 +113,12 @@ app.whenReady().then(() => {
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
+
+  // Handle media protocol
+  protocol.handle('media', (req) => { 
+    const pathToMedia = new URL(req.url.replace(/%20/g, ' ')).pathname;
+    return net.fetch(`file://${pathToMedia}`);
+  });
 
   // i18n
   const lang = app.getLocale()
