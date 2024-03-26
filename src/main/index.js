@@ -10,6 +10,10 @@ import { version } from '/package.json';
 const userDataPath = app.getPath("userData");
 
 // Read&Set version.txt
+if (!fs.existsSync(path.join(userDataPath, "version.txt"))) {
+  fs.writeFileSync(path.join(userDataPath, "version.txt"), "{}");
+}
+
 let ifUpdated = false
 if(fs.readFileSync(path.join(userDataPath, "version.txt"), "utf-8") !== version){
   ifUpdated = true;
@@ -21,7 +25,7 @@ if (!fs.existsSync(path.join(userDataPath, "currentnotebook.txt"))) {
 }
 
 if (!fs.existsSync(path.join(userDataPath, "folders.json"))) {
-  fs.writeFileSync(path.join(userDataPath, "folders.json"), "{}");
+  fs.writeFileSync(path.join(userDataPath, "folders.json"), "[]");
 }
 
 if (!fs.existsSync(path.join(userDataPath, "preferences.json"))) {

@@ -350,6 +350,7 @@ export default {
     window.api.listNotebooks()
       .then(result => {
         // If welcome
+        alert(result.length)
         if(result === undefined || result.length == 0){
           this.openWelcome = true;
         }else{
