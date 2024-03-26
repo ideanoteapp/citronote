@@ -35,5 +35,20 @@
   "preferences": {
     "title": "Preferences",
     "theme": "Theme"
+  },
+  
+  "welcome": {
+    "welcome": "Welcome to ideaNote!",
+    "get_started": "Get Started",
+
+    "create_notebook": "Create a new Notebook",
+    "create_notebook_description": "Create a notebook inside a folder.",
+    "notebook_name": "Notebook name",
+    "location": "Location",
+    "select": "Select",
+    "create": "Create",
+
+    "load_folder": "Load Folder as a Notebook",
+    "load_folder_description": "Loads a folder on this computer."
   }
 }

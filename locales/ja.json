@@ -4,6 +4,8 @@
   
   "new_folder": "新しいフォルダ",
 
+  "newnotebook_dialog": "ノートブックとして読み込むフォルダーを選択してください",
+
   "notebook_menu": {
     "add_notebook": "ノートブックを追加",
     "delete_notebook": "ノートブックを削除"
@@ -35,5 +37,20 @@
   "preferences": {
     "title": "設定",
     "theme": "テーマ"
+  },
+
+  "welcome": {
+    "welcome": "ideaNote へようこそ！",
+    "get_started": "始める",
+
+    "create_notebook": "新しくノートブックを作成",
+    "create_notebook_description": "ノートブックをフォルダの中に作成します。",
+    "notebook_name": "ノートブック名",
+    "location": "作成場所",
+    "select": "選択する",
+    "create": "作成",
+
+    "load_folder": "フォルダを読み込む",
+    "load_folder_description": "このPC上にあるフォルダを読み込みます。"
   }
 }

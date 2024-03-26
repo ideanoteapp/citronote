@@ -165,7 +165,7 @@ app.whenReady().then(() => {
       }
     });
 
-    return fileList;
+    return fileList.concat(folders);
   });
 
   ipcMain.handle("getCurrentNotebook", (event) => {
@@ -187,7 +187,7 @@ app.whenReady().then(() => {
     await dialog
       .showOpenDialog({
         properties: ["openDirectory"],
-        title: "追加するフォルダーを選択してください"
+        title: i18n.newnotebook_dialog
       })
       .then((result) => {
         if(result.filePaths[0]){
@@ -206,6 +206,18 @@ app.whenReady().then(() => {
 
     return res
   });
+
+  ipcMain.handle("createNotebook", (event, path_) => {
+    fs.mkdirSync(path_)
+    folders.push(path_);
+    fs.writeFileSync(
+      path.join(userDataPath, "folders.json"),
+      JSON.stringify(folders),
+      {
+        encoding: "utf-8",
+      }
+    );
+  })
 
   ipcMain.handle("removeNotebook", (even, currentNotebook) => {
     folders = folders.filter(item => item !== currentNotebook);
@@ -442,6 +454,24 @@ app.whenReady().then(() => {
 
   ipcMain.handle("deleteFolder", (event, path) => {
     return fs.rmSync(path, {recursive: true})
+  });
+
+  ipcMain.handle("askFolder", async (event) => {
+    let res
+
+    await dialog
+      .showOpenDialog({
+        properties: ["openDirectory"]
+      })
+      .then((result) => {
+        res = result.filePaths[0]
+      })
+
+    return res
+  });
+
+  ipcMain.handle("reloadNotebooks", (event) => {
+    let folders = JSON.parse(fs.readFileSync(path.join(userDataPath, "folders.json"), {encoding: "utf-8",}));
   });
 
   createWindow()

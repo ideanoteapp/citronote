@@ -5,6 +5,7 @@ contextBridge.exposeInMainWorld("api", {
   getCurrentNotebook: () => ipcRenderer.invoke("getCurrentNotebook"),
   setCurrentNotebook: (notebook) => ipcRenderer.invoke("setCurrentNotebook", notebook),
   addNotebook: () => ipcRenderer.invoke("addNotebook"),
+  createNotebook: (path) => ipcRenderer.invoke("createNotebook", path),
   removeNotebook: (currentNotebook) => ipcRenderer.invoke("removeNotebook", currentNotebook),
   listNotebooks: () => ipcRenderer.invoke("listNotebooks"),
   listFolders: (currentNotebook) => ipcRenderer.invoke("listFolders", currentNotebook),
@@ -21,5 +22,7 @@ contextBridge.exposeInMainWorld("api", {
   upload: (currentFolder, file) => ipcRenderer.invoke("upload", currentFolder, file),
   openInExternal: (path) => ipcRenderer.invoke("openInExternal", path),
   newFolder: (path) => ipcRenderer.invoke("newFolder", path),
-  deleteFolder: (path) => ipcRenderer.invoke("deleteFolder", path)
+  deleteFolder: (path) => ipcRenderer.invoke("deleteFolder", path),
+  askFolder: () => ipcRenderer.invoke("askFolder"),
+  reloadNotebooks: () => ipcRenderer.invoke("reloadNotebooks")
 });
