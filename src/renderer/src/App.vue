@@ -251,7 +251,7 @@
           </button>
         </div>
       </div>
-      <div class="flex justify-center h-[calc(100%-52px)] overflow-hidden">
+      <div class="flex justify-center h-[calc(100%-52px)] overflow-hidden overflow-y-scroll">
         <div class="w-full max-w-[45rem] mx-[2rem] mt-6 h-[calc(100%-24px)] border-none focus:outline-0 text-white">
           <inEditor v-if="currentFile" :path="currentFile" :text="currentFileData" :key="currentFile" @save="saveFile" @changeNoteTitle="changeNoteTitle" ref="editor" :i18n="i18n" />
         </div>
