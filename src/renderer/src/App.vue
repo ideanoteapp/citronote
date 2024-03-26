@@ -261,6 +261,8 @@
   </div>
 
   <inPreferences :openPreferences="openPreferences" @close="this.getPreferences(); openPreferences = false" @getPreferences="this.getPreferences();" />
+
+  <inWelcome v-if="openWelcome" :i18n="i18n" />
   </div>
 </template>
 
@@ -270,6 +272,7 @@ import inFolder from './components/inFolder.vue'
 import inNote from './components/inNote.vue'
 import inEditor from './components/inEditor.vue'
 import inPreferences from './components/inPreferences.vue'
+import inWelcome from './components/inWelcome.vue';
 
 const focus = {
   mounted: (el) => el.focus()
@@ -284,7 +287,8 @@ export default {
     inFolder,
     inNote,
     inEditor,
-    inPreferences
+    inPreferences,
+    inWelcome
   },
   data: () => {
     return {
@@ -298,6 +302,7 @@ export default {
       openMenu: false,
       openPreferences: false,
       openCreateFolderForm: false,
+      openWelcome: false,
 
       // Paths
       currentNotebook: "",
@@ -330,6 +335,7 @@ export default {
       }).catch(error => {
         console.error(error)
       })
+    
 
     // Get current notebook
     window.api.getCurrentNotebook()
@@ -343,7 +349,12 @@ export default {
     // Get Notebooks
     window.api.listNotebooks()
       .then(result => {
-        this.notebooks = result;
+        // If welcome
+        if(result === undefined || result.length == 0){
+          this.openWelcome = true;
+        }else{
+          this.notebooks = result;
+        }
       })
     
     // Set ContextMenu
@@ -480,13 +491,20 @@ export default {
       window.api.removeNotebook(this.currentNotebook)
         .then(res => {
           this.openSwitchNotebookMenu = false
-
-          window.api.listNotebooks()
+          window.api.reloadNotebooks()
             .then(result => {
-              this.notebooks = result;
-            })
+              window.api.listNotebooks()
+                .then(result => {
+                  // If welcome
+                  if(result === undefined || result.length == 0){
+                    this.openWelcome = true;
+                  }else{
+                    this.notebooks = result;
+                  }
+                })
           
-          this.switchNotebook(this.notebooks[0])
+              this.switchNotebook(this.notebooks[0])
+            })
         }).catch((error) => {
           console.log(error)
         })
