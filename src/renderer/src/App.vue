@@ -189,11 +189,11 @@
     <div class="bg-main-pane flex-grow">
       <div class="bg-header h-[52px] w-full border-b border-border flex flex-col justify-center select-none">
         <div class="mx-4">
-          <button class="float-left hover-light" @click="hideSidebar = !hideSidebar">
+          <button class="float-left hover-light" @click="hideSidebar = !hideSidebar" v-if="currentFile">
             <img src="./assets/material_symbols/dock_to_right.svg" alt="Note menu" class="opacity-80">
           </button>
 
-          <button class="float-right hover-light" @click="openNoteMenu = true">
+          <button class="float-right hover-light" @click="openNoteMenu = true" v-if="currentFile">
             <img src="./assets/material_symbols/more_horiz.svg" alt="Note menu" class="opacity-80 w-5 h-5 border-2 rounded-full">
           </button>
 
@@ -260,7 +260,7 @@
 
   </div>
 
-  <inPreferences :openPreferences="openPreferences" @close="this.getPreferences(); openPreferences = false" @getPreferences="this.getPreferences();" />
+  <inPreferences :openPreferences="openPreferences" @close="this.getPreferences(); openPreferences = false" @getPreferences="this.getPreferences();" :i18n="i18n" />
 
   <inWelcome v-if="openWelcome" :i18n="i18n" />
   </div>
