@@ -24,5 +24,6 @@ contextBridge.exposeInMainWorld("api", {
   newFolder: (path) => ipcRenderer.invoke("newFolder", path),
   deleteFolder: (path) => ipcRenderer.invoke("deleteFolder", path),
   askFolder: () => ipcRenderer.invoke("askFolder"),
-  reloadNotebooks: () => ipcRenderer.invoke("reloadNotebooks")
+  reloadNotebooks: () => ipcRenderer.invoke("reloadNotebooks"),
+  getVersion: () => ipcRenderer.invoke("getVersion")
 });

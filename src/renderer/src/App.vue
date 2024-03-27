@@ -26,6 +26,14 @@
                   </div>
                 </button>
               </div>
+              <div>
+                <button class="flex py-2 px-3 hover:bg-hover w-full duration-200" @click="openAboutPage = true; openMenu = false;">
+                  <img src="./assets/material_symbols/help.svg">
+                  <div class="flex flex-col justify-center text-white ml-1.5 text-left">
+                    {{ i18n.about.title }}
+                  </div>
+                </button>
+              </div>
             </div>
         </Transition>
 
@@ -107,14 +115,6 @@
             </div>
           </Transition>
         </div>
-        <a href="https://wv5swdgqa69.typeform.com/to/ec8tXVs7">
-          <div class="border-t border-t-border flex py-2.5 px-2.5 hover:bg-hover2 duration-200">
-            <img src="./assets/material_symbols/mail.svg">
-            <div class="text-white ml-1.5 no-underline">
-              {{ i18n.send_feedback }}
-            </div>
-          </div>
-        </a>
       </div>
     </div>
 
@@ -263,6 +263,8 @@
   <inPreferences :openPreferences="openPreferences" @close="this.getPreferences(); openPreferences = false" @getPreferences="this.getPreferences();" :i18n="i18n" />
 
   <inWelcome v-if="openWelcome" :i18n="i18n" />
+
+  <inAbout :openAboutPage="openAboutPage" @close="openAboutPage = false" :i18n="i18n" />
   </div>
 </template>
 
@@ -273,6 +275,7 @@ import inNote from './components/inNote.vue'
 import inEditor from './components/inEditor.vue'
 import inPreferences from './components/inPreferences.vue'
 import inWelcome from './components/inWelcome.vue';
+import inAbout from './components/inAbout.vue';
 
 const focus = {
   mounted: (el) => el.focus()
@@ -288,7 +291,8 @@ export default {
     inNote,
     inEditor,
     inPreferences,
-    inWelcome
+    inWelcome,
+    inAbout
   },
   data: () => {
     return {
@@ -303,6 +307,7 @@ export default {
       openPreferences: false,
       openCreateFolderForm: false,
       openWelcome: false,
+      openAboutPage: false,
 
       // Paths
       currentNotebook: "",

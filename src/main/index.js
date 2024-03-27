@@ -478,6 +478,10 @@ app.whenReady().then(() => {
     let folders = JSON.parse(fs.readFileSync(path.join(userDataPath, "folders.json"), {encoding: "utf-8",}));
   });
 
+  ipcMain.handle("getVersion", (event) => {
+    return version;
+  });
+
   createWindow()
 
   app.on('activate', function () {
