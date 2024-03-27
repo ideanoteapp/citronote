@@ -1,0 +1,62 @@
+{
+  "root": "Root",
+  
+  "new_folder": "New Folder",
+
+  "notebook_menu": {
+    "add_notebook": "Add Notebook",
+    "delete_notebook": "Remove Notebook"
+  },
+
+  "note_menu": {
+    "delete_note": "Delete Note",
+    "copy_embed_code": "Copy embed code",
+    "pin": "Pin note",
+    "unpin": "Unpin note"
+  },
+
+  "contextmenu": {
+    "cut": "Cut",
+    "copy": "Copy",
+    "paste": "Paste"
+  },
+
+  "editor": {
+    "cannot_open": "This file cannot be opened with ideaNote",
+    "open_in_external": "Open in external app"
+  },
+
+  "create_folder": {
+    "create": "Create",
+    "name": "Folder Name"
+  },
+
+  "preferences": {
+    "title": "Preferences",
+    "theme": "Theme"
+  },
+  
+  "welcome": {
+    "welcome": "Welcome to ideaNote!",
+    "get_started": "Get Started",
+
+    "create_notebook": "Create a new Notebook",
+    "create_notebook_description": "Create a notebook inside a folder.",
+    "notebook_name": "Notebook name",
+    "location": "Location",
+    "select": "Select",
+    "create": "Create",
+
+    "or": "or...",
+
+    "load_folder": "Load Folder as a Notebook",
+    "load_folder_description": "Loads a folder on this computer."
+  },
+
+  "about": {
+    "title": "About ideaNote",
+    "version": "Version ",
+    "view_source_code": "View Source Code",
+    "send_feedback": "Send Feedback"
+  }
+}
