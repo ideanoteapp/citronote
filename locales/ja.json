@@ -50,6 +50,8 @@
     "select": "選択する",
     "create": "作成",
 
+    "or": "または...",
+
     "load_folder": "フォルダを読み込む",
     "load_folder_description": "このPC上にあるフォルダを読み込みます。"
   }

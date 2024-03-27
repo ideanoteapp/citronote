@@ -28,7 +28,9 @@
           </div>
         </button>
 
-        <div class="text-sm my-3 opacity-80">または...</div>
+        <div class="text-sm my-3 opacity-80">
+          {{ i18n.welcome.or }}
+        </div>
 
         <button class="bg-sidebar1 border border-border flex text-left rounded-xl w-full py-2.5 pl-3 pr-4" @click="loadFolder">
           <div class="text-3xl">
