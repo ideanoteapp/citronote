@@ -1,6 +1,5 @@
 {
   "root": "ルート",
-  "send_feedback": "意見を送る",
   
   "new_folder": "新しいフォルダ",
 
@@ -54,5 +53,12 @@
 
     "load_folder": "フォルダを読み込む",
     "load_folder_description": "このPC上にあるフォルダを読み込みます。"
+  },
+
+  "about": {
+    "title": "ideaNoteについて",
+    "version": "バージョン ",
+    "view_source_code": "ソースコードを見る",
+    "send_feedback": "意見を送る"
   }
 }

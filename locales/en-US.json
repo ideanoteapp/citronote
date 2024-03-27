@@ -1,6 +1,5 @@
 {
   "root": "Root",
-  "send_feedback": "Send Feedback",
   
   "new_folder": "New Folder",
 
@@ -52,5 +51,12 @@
 
     "load_folder": "Load Folder as a Notebook",
     "load_folder_description": "Loads a folder on this computer."
+  },
+
+  "about": {
+    "title": "About ideaNote",
+    "version": "Version ",
+    "view_source_code": "View Source Code",
+    "send_feedback": "Send Feedback"
   }
 }
