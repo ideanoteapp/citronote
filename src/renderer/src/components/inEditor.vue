@@ -255,6 +255,10 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
   padding: 0px !important;
 }
 
+.CodeMirror-line span{
+  word-break: break-all;
+}
+
 /* Preview */
 
 .mdcontent h1 {

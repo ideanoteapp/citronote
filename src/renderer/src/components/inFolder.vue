@@ -6,8 +6,7 @@
             {{ name }}
         </div>
         <button v-if="is_current_folder && type === 'folder'" class="group" @click="this.$emit('delete')">
-            <img src="../assets/material_symbols/delete.svg" class="group-hover:hidden w-4 h-4 opacity-60 mt-1">
-            <img src="../assets/material_symbols/delete_red.svg" class="hidden group-hover:block w-4 h-4 opacity-60 mt-1">
+            <img src="../assets/material_symbols/delete.svg" class="group-hover:opacity-100 duration-200 w-4 h-4 opacity-60 mt-1">
         </button>
     </button>
 </template>
