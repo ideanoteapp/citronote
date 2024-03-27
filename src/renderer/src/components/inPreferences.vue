@@ -47,7 +47,8 @@
 <script>
 export default{
   props: [
-      "openPreferences"
+      "openPreferences",
+      "i18n"
   ],
   emits: [
     "close",
@@ -63,8 +64,6 @@ export default{
     window.api.getPreferences()
       .then(result => {
         this.preferences = result
-
-        this.theme = result.theme
       }).catch(error => {
         console.error(error)
       })
