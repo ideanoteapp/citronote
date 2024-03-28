@@ -6,7 +6,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 const path = require("path");
 const fs = require("fs");
 import { version } from '/package.json';
-const { autoUpdater } = require("electron-updater");
+const { autoUpdater } = require("electron-updater")
 
 const userDataPath = app.getPath("userData");
 
@@ -132,25 +132,6 @@ app.whenReady().then(() => {
   }catch{
     var i18n = require(`../../locales/en-US.json`)
   }
-  
-  // Updater
-  autoUpdater.on('update-downloaded', ({ version, files, path, sha512, releaseName, releaseNotes, releaseDate }) => {  
-    dialog.showMessageBox(
-      win, // new BrowserWindow
-      {
-        type: 'question',
-        buttons: [i18n.autoupdater.relaunch, i18n.autoupdater.later],
-        defaultId: 0,
-        cancelId: 999,
-        message: i18n.autoupdater.message + version
-      },
-      res => {
-        if (res  === 0) {
-          autoUpdater.quitAndInstall()
-        }
-      }
-    )
-  })
 
   autoUpdater.checkForUpdatesAndNotify()
 
