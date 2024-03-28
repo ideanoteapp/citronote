@@ -1,4 +1,4 @@
-appId: Korange.ideanoteapp
+appId: com.ideanoteapp.v2
 productName: ideaNote
 directories:
   buildResources: build
