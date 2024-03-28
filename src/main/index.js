@@ -6,7 +6,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 const path = require("path");
 const fs = require("fs");
 import { version } from '/package.json';
-const { autoUpdater } = require("electron-updater");
+const { autoUpdater } = require("electron-updater")
 
 const userDataPath = app.getPath("userData");
 
@@ -68,7 +68,7 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
-    show: false,
+    show: true,
     autoHideMenuBar: true,
     'icon': __dirname + '/../../resources/icon64x64.png',
     webPreferences: {
@@ -127,34 +127,14 @@ app.whenReady().then(() => {
 
   // i18n
   const lang = app.getLocale()
-  if (fs.existsSync(`./locales/${lang}.json`)){
-    var i18n = JSON.parse(fs.readFileSync(`./locales/${lang}.json`, { encoding: "utf-8" }))
-  }else{
-    var i18n = JSON.parse(fs.readFileSync(`./locales/en-US.json`, { encoding: "utf-8" }))
+  try{
+    var i18n = require(`../../locales/${lang}.json`)
+  }catch{
+    var i18n = require(`../../locales/en-US.json`)
   }
-  
-  // Updater
-  autoUpdater.on('update-downloaded', ({ version, files, path, sha512, releaseName, releaseNotes, releaseDate }) => {  
-    dialog.showMessageBox(
-      win, // new BrowserWindow
-      {
-        type: 'question',
-        buttons: [i18n.autoupdater.relaunch, i18n.autoupdater.later],
-        defaultId: 0,
-        cancelId: 999,
-        message: i18n.autoupdater.message + version
-      },
-      res => {
-        if (res  === 0) {
-          autoUpdater.quitAndInstall()
-        }
-      }
-    )
-  })
 
   autoUpdater.checkForUpdatesAndNotify()
 
-  // ContextMenu
   const menu = Menu.buildFromTemplate([
     {
       label: i18n.contextmenu.cut,
@@ -167,12 +147,14 @@ app.whenReady().then(() => {
       role: 'paste',
     }
   ]);
-  
+
+  createWindow()
+
   // IPC
   ipcMain.handle("getLocales", (event) => {
     return i18n
   });
-
+  
   ipcMain.handle("getIfUpdated", (event) => {
     return ifUpdated
   });
@@ -503,8 +485,6 @@ app.whenReady().then(() => {
   ipcMain.handle("getVersion", (event) => {
     return version;
   });
-
-  createWindow()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
