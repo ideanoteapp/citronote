@@ -60,5 +60,11 @@
     "version": "バージョン ",
     "view_source_code": "ソースコードを見る",
     "send_feedback": "意見を送る"
+  },
+
+  "autoupdater": {
+    "message": "新しいバージョンが利用可能です: ",
+    "relaunch": "再起動して適用",
+    "later": "あとで"
   }
 }
