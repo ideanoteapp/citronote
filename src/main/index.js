@@ -68,7 +68,7 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
-    show: false,
+    show: true,
     autoHideMenuBar: true,
     'icon': __dirname + '/../../resources/icon64x64.png',
     webPreferences: {
