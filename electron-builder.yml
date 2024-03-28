@@ -31,6 +31,7 @@ appx:
   languages:
     - "ja_JP"
     - "en_US"
+  
 mac:
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
@@ -52,5 +53,6 @@ appImage:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false
 publish:
-  provider: generic
-  url: https://example.com/auto-updates
+  provider: github
+  owner: "ideanoteapp"
+  repo: "ideanote-v2"
