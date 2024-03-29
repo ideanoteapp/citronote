@@ -13,7 +13,7 @@ extraFiles:
 asarUnpack:
   - resources/**
 win:
-  executableName: ideanote
+  executableName: citronote
   target:
     - "appx"
     - "nsis"
