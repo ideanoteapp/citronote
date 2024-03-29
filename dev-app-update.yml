@@ -1,4 +1,4 @@
 provider: github
 owner: "ideanoteapp"
-repo: "ideanote-v2"
+repo: "citronote"
 updaterCacheDirName: ideanote-v2-updater

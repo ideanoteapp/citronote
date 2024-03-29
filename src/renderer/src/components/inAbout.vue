@@ -22,12 +22,12 @@
             <div class="text-center">
               <img src="../assets/icon.png" class="w-16 rounded-full inline">
               <div class="text-white text-2xl font-bold mt-2 mb-0.5">
-                ideaNote
+                Citronote
               </div>
               <div class="text-sm text-white opacity-80">
                 {{ i18n.about.version }}{{version}}
               </div>
-              <a href="https://github.com/ideanoteapp/ideanote-v2/">
+              <a href="https://github.com/ideanoteapp/citronote/">
                 <div class="w-full bg-sidebar1 border-border border text-white py-2 rounded-lg mt-4">
                   {{ i18n.about.view_source_code }}
                 </div>
