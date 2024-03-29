@@ -24,7 +24,7 @@
   },
 
   "editor": {
-    "cannot_open": "ideaNoteで開けないファイルです",
+    "cannot_open": "Citronoteで開けないファイルです",
     "open_in_external": "外部アプリで開く"
   },
 
@@ -39,7 +39,7 @@
   },
 
   "welcome": {
-    "welcome": "ideaNote へようこそ！",
+    "welcome": "Citronote へようこそ！",
     "get_started": "始める",
 
     "create_notebook": "新しくノートブックを作成",
@@ -56,7 +56,7 @@
   },
 
   "about": {
-    "title": "ideaNoteについて",
+    "title": "Citronoteについて",
     "version": "バージョン ",
     "view_source_code": "ソースコードを見る",
     "send_feedback": "意見を送る"

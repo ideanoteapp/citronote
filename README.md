@@ -1,4 +1,4 @@
-# ideanote-v2
+# citronote
 
 An Electron application with Vue
 
