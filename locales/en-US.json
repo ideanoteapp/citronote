@@ -22,7 +22,7 @@
   },
 
   "editor": {
-    "cannot_open": "This file cannot be opened with ideaNote",
+    "cannot_open": "This file cannot be opened with Citronote",
     "open_in_external": "Open in external app"
   },
 
@@ -37,7 +37,7 @@
   },
   
   "welcome": {
-    "welcome": "Welcome to ideaNote!",
+    "welcome": "Welcome to Citronote!",
     "get_started": "Get Started",
 
     "create_notebook": "Create a new Notebook",
@@ -54,7 +54,7 @@
   },
 
   "about": {
-    "title": "About ideaNote",
+    "title": "About Citronote",
     "version": "Version ",
     "view_source_code": "View Source Code",
     "send_feedback": "Send Feedback"
