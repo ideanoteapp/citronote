@@ -35,6 +35,17 @@
                   <option value="dracula">Dracula</option>
                   <option value="blueprint">Blueprint</option>
                 </select>
+
+                <div class="mt-4">{{ i18n.preferences.enable_hide_all }}</div>
+                <div class="mb-1 opacity-80 text-sm w-[32rem]">{{ i18n.preferences.enable_hide_all_description }}</div>
+                <select
+                  v-model="hide_all"
+                  @change='this.$emit("getPreferences");'
+                  class="bg-header text-white rounded-lg px-3 py-2 min-w-32 border border-border"
+                >
+                  <option value="enabled">有効</option>
+                  <option value="disabled">無効</option>
+                </select>
               </div>
             </div>
           </div>
@@ -57,7 +68,8 @@ export default{
   data: () => {
     return {
       preferences: {},
-      theme: ""
+      theme: "",
+      hide_all: false
     }
   },
   mounted(){
@@ -71,10 +83,17 @@ export default{
       if (this.preferences.theme){
         this.theme = this.preferences.theme
       }
+
+      if (this.preferences.hide_all){
+        this.hide_all = this.preferences.hide_all
+      }else{
+        this.hide_all = "disabled"
+      }
   },
   methods: {
     close(){
       this.preferences.theme = this.theme
+      this.preferences.hide_all = this.hide_all
 
       window.api.setPreferences(JSON.stringify(this.preferences))
       .then(result => {

@@ -33,7 +33,9 @@
 
   "preferences": {
     "title": "Preferences",
-    "theme": "Theme"
+    "theme": "Theme",
+    "enable_hide_all": "Enable \"Hide All\"",
+    "enable_hide_all_description": "Clicking \"Hide All\" in the menu will temporarily hide the editor and note list. You can restore it by clicking \"Show All\"."
   },
   
   "welcome": {
@@ -58,5 +60,10 @@
     "version": "Version ",
     "view_source_code": "View Source Code",
     "send_feedback": "Send Feedback"
+  },
+
+  "menu": {
+    "hide_all": "Hide All",
+    "hide_all_off": "Show All"
   }
 }
