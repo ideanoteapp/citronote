@@ -24,3 +24,8 @@ You can download the latest version of ideaNote from the [Microsoft Store]([http
 ## 📝 License
 
 [Apache License 2.0](./LICENSE)
+
+## ❤ Special Thanks
+
+- [@kaoism@misskey.systems](https://misskey.systems/@kaoism)  
+  Suggested a name of いのっぴ/INoppi
