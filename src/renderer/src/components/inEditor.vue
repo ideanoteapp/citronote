@@ -84,13 +84,12 @@ export default {
     previewMd(){
       this.parsedMd = marked.parse(this.textarea)
 
-      this.easyMDE = undefined;
+      this.isPreviewMd = true
+
       const elements = document.querySelectorAll(".EasyMDEContainer");
       elements.forEach((element) => {
-        element.remove();
+        element.style.display = 'none';
       });
-
-      this.isPreviewMd = true
 
       setTimeout(() => {
         hljs.highlightAll();
@@ -99,27 +98,9 @@ export default {
     exitPreview(){
       this.isPreviewMd = false
 
-      this.easyMDE = new EasyMDE({
-        element: document.getElementById("markdown-editor"),
-        autoDownloadFontAwesome: false,
-        spellChecker: false,
-        lineWrapping: true,
-        toolbar: false,
-        status: false,
-        forceSync: true,
-        autofocus: true,
-        initialValue: this.textarea,
-        placeholder: "Type here...",
-        shortcuts: {
-          togglePreview: null,
-          toggleFullScreen: null,
-          toggleSideBySide: null,
-        }
-      });
-
-      this.easyMDE.codemirror.on("change", () => {
-        this.$emit("save", this.easyMDE.value());
-        this.textarea = this.easyMDE.value()
+      const elements = document.querySelectorAll(".EasyMDEContainer");
+      elements.forEach((element) => {
+        element.style.display = 'block';
       });
     },
     changeNoteTitle() {
