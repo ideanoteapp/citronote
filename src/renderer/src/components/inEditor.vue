@@ -10,7 +10,7 @@
     />
   </div>
 
-  <div id="md-preview" v-html="parsedMd" v-show="isPreviewMd" class="mdcontent whitespace-pre-line flex flex-col"></div>
+  <div id="md-preview" v-html="parsedMd" v-show="isPreviewMd" class="mdcontent whitespace-pre-line flex flex-col break-all"></div>
 
   <textarea id="markdown-editor" v-if="path.replace(/^.*[\\/]/, '').match(/[^.]+$/s)[0] === 'md'" v-show="!previewMd" placeholder="Type here..."  v-focus></textarea>
 
@@ -218,20 +218,8 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
   word-break: break-all;
 }
 
-.cm-strong:not(.cm-formatting) {
-  text-decoration: underline; /* 下線 */
-  text-decoration-thickness: 0.5em; /* 線の太さ */
-  text-decoration-color: rgba(255, 228, 0, 0.4); /* 線の色 */
-  text-underline-offset: -0.2em; /* 線の位置。テキストに重なるようにやや上部にする */
-  text-decoration-skip-ink: none;
-}
-
 .cm-strong.cm-formatting {
-  text-decoration: underline; /* 下線 */
-  text-decoration-thickness: 0.5em; /* 線の太さ */
-  text-decoration-color: rgba(255, 228, 0, 0.6); /* 線の色 */
-  text-underline-offset: -0.2em; /* 線の位置。テキストに重なるようにやや上部にする */
-  text-decoration-skip-ink: none;
+  font-weight: bold;
 }
 
 .cm-formatting:not(.cm-quote) {
@@ -260,6 +248,9 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
 }
 
 /* Preview */
+.mdcontent p {
+  padding: 8px 0px;
+}
 
 .mdcontent h1 {
   font-size: calc(1.325rem + 0.9vw);
@@ -292,20 +283,15 @@ div.CodeMirror.cm-s-easymde.CodeMirror-wrap {
 }
 
 .mdcontent strong {
-  text-decoration: underline; /* 下線 */
-  text-decoration-thickness: 0.5em; /* 線の太さ */
-  text-decoration-color: rgba(255, 230, 0, 0.5); /* 線の色 */
-  text-underline-offset: -0.2em; /* 線の位置。テキストに重なるようにやや上部にする */
-  text-decoration-skip-ink: none;
   font-weight: bold;
 }
 
 .mdcontent blockquote {
-  border-left: 6px solid #ffffff50;
-  padding-left: 10px;
+  border-left: 4px solid #ffffff50;
+  padding-left: 13px;
   display: flex;
   flex-direction: column;
-  margin: 6px;
+  margin: 4px 0px;
 }
 
 .mdcontent a {
@@ -329,7 +315,38 @@ ol {
   list-style-position: inside;
 }
 
+.mdcontent ul ul {
+  margin-left: 16px;
+}
+
+.mdcontent ol ol {
+  margin-left: 16px;
+}
+
+.mdcontent ul ol {
+  margin-left: 16px;
+}
+
+.mdcontent ol ul {
+  margin-left: 16px;
+}
+
 .mdcontent pre code {
   word-break: break-all;
+  border-radius: 8px;
+}
+
+.mdcontent pre code * *{
+  word-break: break-all;
+}
+
+.mdcontent p code{
+  background-color: #282c34;
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+
+.mdcontent hr{
+  margin: 8px 0px;
 }
 </style>
