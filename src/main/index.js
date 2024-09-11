@@ -8,6 +8,8 @@ const fs = require("fs");
 import { version } from '/package.json';
 const { autoUpdater } = require("electron-updater")
 
+app.setPath('userData', path.join(process.cwd(), 'dev-userdata'));
+
 const userDataPath = app.getPath("userData");
 
 // Read&Set version.txt
