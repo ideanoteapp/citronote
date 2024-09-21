@@ -83,9 +83,11 @@ function createWindow() {
   })
 
   const handleUrlOpen = (e, url)=>{
-    if( url.match(/^http/)){
-      e.preventDefault()
-      shell.openExternal(url)
+    if ( process.env.NODE_ENV !== 'development' && (new URL(url)).hostname === 'localhost' ) {
+      if( url.match(/^http/)){
+        e.preventDefault()
+        shell.openExternal(url)
+      }
     }
   }
   mainWindow.webContents.on('will-navigate', handleUrlOpen);
