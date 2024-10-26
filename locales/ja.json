@@ -37,7 +37,9 @@
 
   "preferences": {
     "title": "設定",
-    "theme": "テーマ"
+    "theme": "テーマ",
+    "enable_hide_all": "「爆発させる」を有効にする",
+    "enable_hide_all_description": "メニューの「爆発させる」をクリックするとエディタとノート一覧が一時的に隠れるようになります。「復元する」をクリックすることで戻せます。"
   },
 
   "welcome": {
@@ -68,5 +70,10 @@
     "message": "新しいバージョンが利用可能です: ",
     "relaunch": "再起動して適用",
     "later": "あとで"
+  },
+
+  "menu": {
+    "hide_all": "爆発させる",
+    "hide_all_off": "復元する"
   }
 }

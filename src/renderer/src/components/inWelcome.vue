@@ -1,7 +1,7 @@
 <template>
   <div class="fixed w-screen h-screen top-0 left-0 bg-header flex flex-col justify-center">
     <div class="flex justify-center">
-      <div class="min-w-[20rem] max-w-[24rem] min-h-64 rounded-xl bg-sidebar2 border border-border text-center px-8 py-8 text-white">
+      <div class="min-w-[20rem] max-w-[24rem] min-h-64 rounded-xl bg-sidebar2 border border-border text-center px-8 py-8 text-white animate-show">
         <img
           src="../assets/icon.png"
           class="inline mb-2.5 rounded-full"
@@ -14,37 +14,39 @@
         <div class="text-2xl mb-2.5">
           {{ i18n.welcome.welcome }}
         </div>
-        <button class="bg-sidebar1 border border-border flex text-left rounded-xl w-full py-2.5 pl-2 pr-4" @click="createNotebook">
-          <div class="text-4xl">
-            ✨️
-          </div>
-          <div>
-            <div class="text-lg">
-              {{ i18n.welcome.create_notebook }}
+        <div class="animate-button">
+          <button class="bg-sidebar1 border border-border flex text-left rounded-xl w-full py-2.5 pl-2 pr-4" @click="createNotebook">
+            <div class="text-4xl">
+              ✨️
             </div>
-            <div class="text-sm">
-              {{ i18n.welcome.create_notebook_description }}
+            <div>
+              <div class="text-lg">
+                {{ i18n.welcome.create_notebook }}
+              </div>
+              <div class="text-sm">
+                {{ i18n.welcome.create_notebook_description }}
+              </div>
             </div>
-          </div>
-        </button>
+          </button>
 
-        <div class="text-sm my-3 opacity-80">
-          {{ i18n.welcome.or }}
+          <div class="text-sm my-3 opacity-80">
+            {{ i18n.welcome.or }}
+          </div>
+
+          <button class="bg-sidebar1 border border-border flex text-left rounded-xl w-full py-2.5 pl-3 pr-4" @click="loadFolder">
+            <div class="text-3xl">
+              🔽
+            </div>
+            <div>
+              <div class="text-md">
+                {{ i18n.welcome.load_folder }}
+              </div>
+              <div class="text-xs">
+                {{ i18n.welcome.load_folder_description }}
+              </div>
+            </div>
+          </button>
         </div>
-
-        <button class="bg-sidebar1 border border-border flex text-left rounded-xl w-full py-2.5 pl-3 pr-4" @click="loadFolder">
-          <div class="text-3xl">
-            🔽
-          </div>
-          <div>
-            <div class="text-md">
-              {{ i18n.welcome.load_folder }}
-            </div>
-            <div class="text-xs">
-              {{ i18n.welcome.load_folder_description }}
-            </div>
-          </div>
-        </button>
 
         </div>
 
@@ -124,3 +126,41 @@ export default{
   }
 }
 </script>
+
+<style>
+.animate-show{
+  animation: show 2s forwards;
+}
+
+.animate-button{
+  animation: button 3s forwards;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+    display: none;
+  }
+  20% {
+    transform: translateY(15px);
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes button {
+  0% {
+    opacity: 0;
+    display: none;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+</style>

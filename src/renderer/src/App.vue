@@ -18,6 +18,24 @@
         </Transition>
         <Transition name="slide-up">
             <div class="absolute py-1.5 left-2.5 bg-sidebar1 z-50 w-48 rounded-lg top-10 shadow-md border border-border" v-if="this.openMenu">
+              <div v-if="hideAll === false && preferences.hide_all === 'enabled'">
+                <button class="flex py-2 px-3 hover:bg-hover w-full duration-200" @click="hideAll = true; openMenu = false;">
+                  <img src="./assets/material_symbols/bomb.svg">
+                  <div class="flex flex-col justify-center text-white ml-1.5 text-left">
+                    {{ i18n.menu.hide_all }}
+                  </div>
+                </button>
+              </div>
+
+              <div v-if="hideAll === true &&  preferences.hide_all === 'enabled'">
+                <button class="flex py-2 px-3 hover:bg-hover w-full duration-200" @click="hideAll = false; openMenu = false;">
+                  <img src="./assets/material_symbols/visibility.svg">
+                  <div class="flex flex-col justify-center text-white ml-1.5 text-left">
+                    {{ i18n.menu.hide_all_off }}
+                  </div>
+                </button>
+              </div>
+
               <div>
                 <button class="flex py-2 px-3 hover:bg-hover w-full duration-200" @click="openPreferences = true; openMenu = false;">
                   <img src="./assets/material_symbols/settings.svg">
@@ -26,6 +44,7 @@
                   </div>
                 </button>
               </div>
+
               <div>
                 <button class="flex py-2 px-3 hover:bg-hover w-full duration-200" @click="openAboutPage = true; openMenu = false;">
                   <img src="./assets/material_symbols/help.svg">
@@ -181,6 +200,7 @@
           v-for="i in files"
           @click="openFile(i.name)"
           :class="{'bg-hover': currentFile === i.name}"
+          v-if="!hideAll"
         />
       </div>
     </div>
@@ -252,7 +272,7 @@
         </div>
       </div>
       <div class="flex justify-center h-[calc(100%-52px)] overflow-hidden overflow-y-scroll">
-        <div class="w-full max-w-[45rem] mx-[2rem] mt-6 h-[calc(100%-24px)] border-none focus:outline-0 text-white">
+        <div class="w-full max-w-[45rem] mx-[2rem] mt-6 h-[calc(100%-24px)] border-none focus:outline-0 text-white" :class="{'hidden': hideAll}">
           <inEditor v-if="currentFile" :path="currentFile" :text="currentFileData" :key="currentFile" @save="saveFile" @changeNoteTitle="changeNoteTitle" ref="editor" :i18n="i18n" />
         </div>
       </div>
@@ -324,6 +344,7 @@ export default {
       MdPreview: false,
       hideSidebar: false,
       preferences: {},
+      hideAll: false,
 
       // Form Data
       createFolderName: ""

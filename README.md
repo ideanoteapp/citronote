@@ -1,34 +1,31 @@
-# citronote
+<div align="center">
+  <a href="https://github.com/ideanoteapp/ideanote-desktop/">
+    <img src="/resources/icon.png" alt="Logo" width="128" height="128">
+  </a>
 
-An Electron application with Vue
+  <h1 align="center">Citronote</h3>
 
-## Recommended IDE Setup
+  <p align="center">
+       Note-taking app with many features compatible with Markdown.
+    <br />
+    <br />
+    <a href="https://citronote.korange.work/">
+      Offcial Site
+    </a>
+  </p>
+</div>
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+---
 
-## Project Setup
+## 📥 Download
 
-### Install
+You can download the latest version of ideaNote from the [Microsoft Store]([https://ideanote.korange.work/en/](https://apps.microsoft.com/detail/9n0gb06ptt2w?hl=ja-jp&gl=JP)) or from the GitHub Releases page.
 
-```bash
-$ npm install
-```
+## 📝 License
 
-### Development
+[Apache License 2.0](./LICENSE)
 
-```bash
-$ npm run dev
-```
+## ❤ Special Thanks
 
-### Build
-
-```bash
-# For windows
-$ npm run build:win
-
-# For macOS
-$ npm run build:mac
-
-# For Linux
-$ npm run build:linux
-```
+- [@kaoism@misskey.systems](https://misskey.systems/@kaoism)  
+  Suggested a name of いのっぴ/INoppi
