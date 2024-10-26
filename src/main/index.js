@@ -461,7 +461,18 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle("deleteFolder", (event, path) => {
-    return fs.rmSync(path, {recursive: true})
+    dialog
+      .showMessageBox({
+        type: "question",
+        buttons: ["OK", "Cancel"],
+        title: "Citronote",
+        message: i18n.deletefolder_dialog_message,
+      })
+      .then((result) => {
+        if (result.response === 0) {
+          fs.rmSync(path, {recursive: true})
+        }
+      });
   });
 
   ipcMain.handle("askFolder", async (event) => {
