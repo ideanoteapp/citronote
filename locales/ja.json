@@ -33,6 +33,8 @@
     "name": "フォルダの名前"
   },
 
+  "deletefolder_dialog_message": "このフォルダを削除しますか？\nこの操作は元に戻せません。",
+
   "preferences": {
     "title": "設定",
     "theme": "テーマ",

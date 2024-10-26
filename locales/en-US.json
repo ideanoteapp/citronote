@@ -31,6 +31,8 @@
     "name": "Folder Name"
   },
 
+  "deletefolder_dialog_message": "Are you sure you want to delete this folder?\nThis action cannot be undone.",
+
   "preferences": {
     "title": "Preferences",
     "theme": "Theme",
